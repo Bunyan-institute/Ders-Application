@@ -225,7 +225,7 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
             {
               icon: 'layers-outline',
               title: '7 ትክክለኛ ኪታቦች',
-              description: 'በዐቂዳ (ኪ/ተውሂድ፣ ሰላሰቱል ኡሱል፣ ቀዋዒዱል አርበዓ)፣ ሐዲስና ፊቅህ የተዘጋጁ።',
+              description: 'በሐዲስ (ሪያዱ ሷሊሂን)፣ ተፍሲር፣ ዐቂዳና ፊቅህ በሸይኽ ሙሐመድ ፈረጅ የተዘጋጁ።',
             },
             {
               icon: 'document-text-outline',
@@ -473,7 +473,7 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
             {
               icon: 'layers-outline',
               title: '7 Classical Kitabs',
-              description: 'Structured curricula in Aqeedah (Tawheed, Usool ath-Thalathah, Qawa\'id al-Arba\'ah), Hadith, and Fiqh.',
+              description: 'Structured curricula in Hadith (Riyad us-Saliheen), Tafsir, Aqeedah, and Fiqh expounded by Sheikh Muhammed Ferej.',
             },
             {
               icon: 'document-text-outline',

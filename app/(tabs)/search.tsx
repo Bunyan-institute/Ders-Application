@@ -18,9 +18,9 @@ type SearchResult = {
 
 const MULTILINGUAL_SEARCH_MAP: Record<string, string[]> = {
   'crs-1': [
-    'tawheed', 'tawhid', 'monotheism', 'aqeedah', 'kitab at-tawheed', 'fawzan', 'muhammad ibn abd al-wahhab',
-    'ተውሂድ', 'አቂዳ', 'ፈውዛን', 'ኪታቡ ተውሂድ', 'የተውሂድ ኪታብ', 'እምነት',
-    'tawhiida', 'aqiidaa', 'fawzaan', 'kitaaba tawhiidaa', 'waaqayyummaa',
+    'riyadus saliheen', 'riyad us saliheen', 'hadith', 'sheikh muhammed ferej', 'ferej', 'africa tv',
+    'ሪያዱ ሷሊሂን', 'ሀዲስ', 'ሸይኽ ሙሐመድ ፈረጅ', 'ሙሐመድ ፈረጅ', 'ስነ-ምግባር', 'አፍሪካ ቲቪ',
+    'riyaadus saalihiin', 'hadiisa', 'sheekh muhaammad faraj', 'faraj', 'akhlaaqa',
   ],
   'crs-2': [
     'usool', 'usul', 'thalatha', 'three principles', 'aqeedah', 'fundamentals',

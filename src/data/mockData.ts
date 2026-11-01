@@ -15,7 +15,7 @@ export const courses: Course[] = [
     description: 'شرح منهجي مفصل وشامل لأحاديث رياض الصالحين للإمام النووي رحمه الله، يقدمه فضيلة الشيخ المربي محمد فرج مجنو رحمه الله. يتضمن 32 درساً صوتياً أصيلاً مع التوجيهات التربوية والأخلاق النبوية.',
     order: 1,
     thumbnailUrl: '',
-    coverUrl: require('../../assets/covers/kitab-at-tawheed.jpg'),
+    coverUrl: require('../../assets/covers/riyad-us-saliheen.jpg'),
     instructor: 'الشَّيْخُ مُحَمَّدُ فَرَجْ رَحِمَهُ اللَّهُ',
     totalLessons: 32,
     level: 'Beginner',

@@ -31,28 +31,66 @@ export const ContinueLearningCard = memo(({ progress, onPress }: Props) => {
 
   return (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}
+      style={[
+        styles.card,
+        {
+          backgroundColor: colors.surface,
+          borderColor: colors.border,
+        },
+      ]}
       onPress={() => onPress(progress.lessonId)}
-      activeOpacity={0.7}
+      activeOpacity={0.75}
       accessibilityLabel={lesson.title}
     >
-      <View style={[styles.playIcon, { backgroundColor: colors.primary }]}>
-        <Ionicons name="play" size={20} color="#fff" />
+      <View
+        style={[
+          styles.playIcon,
+          {
+            backgroundColor: colors.primary,
+          },
+        ]}
+      >
+        <Ionicons name="play" size={16} color="#FFFFFF" />
       </View>
       <View style={styles.info}>
-        <Text style={[styles.title, { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' }]} numberOfLines={1}>
+        <Text
+          style={[
+            styles.title,
+            {
+              color: colors.text,
+              fontSize: fonts.sm,
+              writingDirection: isRTL ? 'rtl' : 'ltr',
+            },
+          ]}
+          numberOfLines={1}
+        >
           {lesson.title}
         </Text>
         {course && (
-          <Text style={[styles.course, { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' }]} numberOfLines={1}>
+          <Text
+            style={[
+              styles.course,
+              {
+                color: colors.textSecondary,
+                fontSize: fonts.xs,
+                writingDirection: isRTL ? 'rtl' : 'ltr',
+              },
+            ]}
+            numberOfLines={1}
+          >
             {course.title}
           </Text>
         )}
         <View style={styles.progressRow}>
           <View style={[styles.progressBar, { backgroundColor: colors.progressTrack }]}>
-            <View style={[styles.progressFill, { backgroundColor: colors.progressFill, width: `${percent}%` }]} />
+            <View
+              style={[
+                styles.progressFill,
+                { backgroundColor: colors.primary, width: `${percent}%` },
+              ]}
+            />
           </View>
-          <Text style={[styles.remaining, { color: colors.textTertiary, fontSize: fonts.xs }]}>
+          <Text style={[styles.remaining, { color: colors.textSecondary, fontSize: fonts.xs }]}>
             {t.home.remainingTime(formatDuration(Math.round(remaining)))}
           </Text>
         </View>
@@ -66,16 +104,16 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     padding: Spacing.md,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     marginRight: Spacing.md,
-    width: 290,
+    width: 300,
     gap: Spacing.md,
   },
   playIcon: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 38,
+    height: 38,
+    borderRadius: BorderRadius.sm,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -83,7 +121,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontWeight: '700',
+    fontWeight: '600',
     marginBottom: 2,
     textAlign: 'left',
   },
@@ -99,12 +137,12 @@ const styles = StyleSheet.create({
   progressBar: {
     flex: 1,
     height: 4,
-    borderRadius: 2,
+    borderRadius: BorderRadius.xs,
     overflow: 'hidden',
   },
   progressFill: {
     height: '100%',
-    borderRadius: 2,
+    borderRadius: BorderRadius.xs,
   },
   remaining: {
     minWidth: 60,

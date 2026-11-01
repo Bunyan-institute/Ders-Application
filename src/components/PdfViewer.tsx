@@ -92,9 +92,9 @@ export function PdfViewer({
       {/* Top Header Bar */}
       <View style={[styles.header, { borderBottomColor: colors.border }]}>
         <View style={styles.headerLeft}>
-          <View style={[styles.pdfBadge, { backgroundColor: '#D32F2F15', borderColor: '#D32F2F30' }]}>
-            <Ionicons name="document-text" size={13} color="#D32F2F" />
-            <Text style={[styles.pdfBadgeText, { color: '#D32F2F' }]}>{t.pdfViewer.badge}</Text>
+          <View style={[styles.pdfBadge, { backgroundColor: colors.surfaceVariant, borderColor: colors.borderLight }]}>
+            <Ionicons name="document-text-outline" size={13} color={colors.primary} />
+            <Text style={[styles.pdfBadgeText, { color: colors.primary }]}>{t.pdfViewer.badge}</Text>
           </View>
           <View style={{ flex: 1 }}>
             <Text style={[styles.title, { color: colors.text, writingDirection: 'rtl' }]} numberOfLines={1}>
@@ -302,14 +302,9 @@ export function PdfViewer({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 2,
     marginBottom: Spacing.lg,
   },
   header: {
@@ -332,17 +327,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 3,
     paddingHorizontal: 7,
-    borderRadius: BorderRadius.sm,
-    borderWidth: 1,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 4,
   },
   pdfBadgeText: {
     fontSize: 11,
-    fontWeight: '800',
+    fontWeight: '700',
   },
   title: {
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   subtitle: {
     fontSize: 11,
@@ -358,18 +353,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 5,
     paddingHorizontal: 9,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 5,
   },
   actionBtnText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   iconBtn: {
     width: 28,
     height: 28,
-    borderRadius: 14,
+    borderRadius: BorderRadius.xs,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -431,16 +426,16 @@ const styles = StyleSheet.create({
     gap: 8,
   },
   mobileCardIcon: {
-    width: 68,
-    height: 68,
-    borderRadius: 34,
+    width: 56,
+    height: 56,
+    borderRadius: BorderRadius.md,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 4,
   },
   mobileCardTitle: {
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '600',
     textAlign: 'center',
   },
   mobileCardSubtitle: {
@@ -460,26 +455,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: 16,
-    borderRadius: BorderRadius.md,
+    borderRadius: BorderRadius.sm,
     gap: 6,
   },
   mobileOpenBtnText: {
     color: '#FFFFFF',
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   mobileDownloadBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 10,
     paddingHorizontal: 16,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
+    borderRadius: BorderRadius.sm,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 6,
   },
   mobileDownloadBtnText: {
     fontSize: 13,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   footerHint: {
     flexDirection: 'row',

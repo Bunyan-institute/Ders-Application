@@ -13,9 +13,9 @@ interface Props {
 }
 
 const LEVEL_COLORS = {
-  Beginner: '#2E7D32',
-  Intermediate: '#E65100',
-  Advanced: '#C62828',
+  Beginner: '#1A4D2E',
+  Intermediate: '#92400E',
+  Advanced: '#991B1B',
 };
 
 const LEVEL_ARABIC = {
@@ -39,9 +39,17 @@ export const CourseCard = memo(({ course, onPress }: Props) => {
     };
   }, [progress, course.id, course.totalLessons]);
 
+  const levelColor = LEVEL_COLORS[course.level] || colors.primary;
+
   return (
     <TouchableOpacity
-      style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}
+      style={[
+        styles.card,
+        {
+          backgroundColor: colors.surface,
+          borderColor: colors.border,
+        },
+      ]}
       onPress={() => onPress(course)}
       activeOpacity={0.75}
       accessibilityLabel={`فتح ${course.title}`}
@@ -54,7 +62,7 @@ export const CourseCard = memo(({ course, onPress }: Props) => {
             arabicTitle={course.title}
             author={course.instructor}
             width={84}
-            height={112}
+            height={116}
             variant="card"
           />
         </View>
@@ -62,13 +70,21 @@ export const CourseCard = memo(({ course, onPress }: Props) => {
         {/* Book Details */}
         <View style={styles.detailsContainer}>
           <View style={styles.topRow}>
-            <View style={[styles.levelBadge, { backgroundColor: LEVEL_COLORS[course.level] + '18' }]}>
-              <Text style={[styles.levelText, { color: LEVEL_COLORS[course.level], fontSize: fonts.xs }]}>
+            <View
+              style={[
+                styles.levelBadge,
+                {
+                  backgroundColor: colors.surfaceVariant,
+                  borderColor: colors.borderLight,
+                },
+              ]}
+            >
+              <Text style={[styles.levelText, { color: levelColor, fontSize: fonts.xs }]}>
                 {LEVEL_ARABIC[course.level] || course.level}
               </Text>
             </View>
             <View style={styles.lessonsCountBadge}>
-              <Ionicons name="play-circle-outline" size={13} color={colors.textSecondary} />
+              <Ionicons name="mic-outline" size={13} color={colors.textSecondary} />
               <Text style={[styles.lessonsCountText, { color: colors.textSecondary, fontSize: fonts.xs }]}>
                 {course.totalLessons} {course.totalLessons <= 10 ? 'دروس' : 'درساً'}
               </Text>
@@ -77,7 +93,7 @@ export const CourseCard = memo(({ course, onPress }: Props) => {
 
           {/* Arabic-Only Book Title */}
           <Text
-            style={[styles.title, { color: colors.text, fontSize: fonts.lg }]}
+            style={[styles.title, { color: colors.text, fontSize: fonts.md }]}
             numberOfLines={2}
           >
             {course.title}
@@ -109,8 +125,11 @@ export const CourseCard = memo(({ course, onPress }: Props) => {
               </View>
             ) : (
               <View style={styles.instructorRow}>
-                <Ionicons name="person-outline" size={12} color={colors.textTertiary} />
-                <Text style={[styles.instructorText, { color: colors.textTertiary, fontSize: fonts.xs }]} numberOfLines={1}>
+                <Ionicons name="ribbon-outline" size={13} color={colors.accent} />
+                <Text
+                  style={[styles.instructorText, { color: colors.textSecondary, fontSize: fonts.xs }]}
+                  numberOfLines={1}
+                >
                   {course.instructor}
                 </Text>
               </View>
@@ -125,8 +144,8 @@ export const CourseCard = memo(({ course, onPress }: Props) => {
 const styles = StyleSheet.create({
   card: {
     padding: Spacing.md,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     marginBottom: Spacing.md,
     overflow: 'hidden',
   },
@@ -141,7 +160,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 1,
     justifyContent: 'space-between',
-    minHeight: 112,
+    minHeight: 116,
   },
   topRow: {
     flexDirection: 'row',
@@ -152,28 +171,29 @@ const styles = StyleSheet.create({
   levelBadge: {
     paddingHorizontal: Spacing.sm,
     paddingVertical: 2,
-    borderRadius: BorderRadius.sm,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   levelText: {
-    fontWeight: '700',
+    fontWeight: '600',
   },
   lessonsCountBadge: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 3,
+    gap: 4,
   },
   lessonsCountText: {
     fontWeight: '500',
   },
   title: {
-    fontWeight: '800',
+    fontWeight: '700',
     marginBottom: 4,
     lineHeight: 22,
     writingDirection: 'rtl',
     textAlign: 'left',
   },
   description: {
-    lineHeight: 16,
+    lineHeight: 17,
     writingDirection: 'rtl',
     textAlign: 'left',
     marginBottom: 6,
@@ -184,7 +204,7 @@ const styles = StyleSheet.create({
   instructorRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 5,
   },
   instructorText: {
     fontWeight: '500',
@@ -196,16 +216,16 @@ const styles = StyleSheet.create({
   },
   progressBar: {
     flex: 1,
-    height: 5,
-    borderRadius: 3,
+    height: 4,
+    borderRadius: BorderRadius.xs,
     overflow: 'hidden',
   },
   progressFill: {
     height: '100%',
-    borderRadius: 3,
+    borderRadius: BorderRadius.xs,
   },
   progressText: {
-    fontWeight: '700',
+    fontWeight: '600',
     minWidth: 28,
   },
 });

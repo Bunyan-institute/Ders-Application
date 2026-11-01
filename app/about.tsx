@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import {
-  View, Text, ScrollView, StyleSheet, TouchableOpacity,
-  Share, Linking, Platform,
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Share,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTheme, useScaledFont, useTranslation } from '../src/hooks';
 import { Spacing, BorderRadius } from '../src/theme';
 
@@ -36,40 +39,78 @@ export default function AboutScreen() {
           headerStyle: { backgroundColor: colors.surface },
           headerTintColor: colors.text,
           headerBackTitle: t.common.back,
+          headerShadowVisible: false,
         }}
       />
 
-      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+      >
         {/* Banner Card */}
         <View style={[styles.bannerCard, { backgroundColor: colors.primary }]}>
-          <Text style={styles.arabicLogo}>بُنْيَان</Text>
+          <Text style={[styles.arabicLogo, { color: colors.accentLight }]}>بُنْيَان</Text>
           <Text style={styles.bannerTitle}>{t.about.bannerTitle}</Text>
-          <Text style={styles.bannerSubtitle}>{t.about.bannerSubtitle}</Text>
+          <Text style={[styles.bannerSubtitle, { color: '#FFFFFFCC' }]}>
+            {t.about.bannerSubtitle}
+          </Text>
         </View>
 
         {/* Section 1: The Sheikh & Dua */}
-        <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
           <View style={styles.cardHeader}>
-            <View style={[styles.iconBox, { backgroundColor: '#1B5E2018' }]}>
-              <Ionicons name="heart" size={22} color="#1B5E20" />
+            <View
+              style={[
+                styles.iconBox,
+                {
+                  backgroundColor: colors.surfaceVariant,
+                  borderColor: colors.borderLight,
+                },
+              ]}
+            >
+              <Ionicons name="heart-outline" size={18} color={colors.accent} />
             </View>
             <View style={styles.headerTextGroup}>
-              <Text style={[styles.cardTitle, { color: colors.text, fontSize: fonts.lg }]}>
+              <Text
+                style={[
+                  styles.cardTitle,
+                  { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.about.sheikhTitle}
               </Text>
-              <Text style={[styles.cardSubtitle, { color: colors.textSecondary, fontSize: fonts.xs }]}>
+              <Text
+                style={[
+                  styles.cardSubtitle,
+                  { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.about.sheikhSubtitle}
               </Text>
             </View>
           </View>
 
-          <Text style={[styles.cardBody, { color: colors.textSecondary, fontSize: fonts.md }]}>
+          <Text
+            style={[
+              styles.cardBody,
+              { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {t.about.sheikhBody}
           </Text>
 
           {/* Sincere Dua Box */}
-          <View style={[styles.duaCard, { backgroundColor: isDark ? '#1E2D1F' : '#F1F8E9', borderColor: colors.primaryLight }]}>
-            <Text style={[styles.duaArabic, { color: isDark ? '#A5D6A7' : '#1B5E20' }]}>
+          <View
+            style={[
+              styles.duaCard,
+              {
+                backgroundColor: colors.surfaceVariant,
+                borderColor: colors.borderLight,
+                borderLeftColor: colors.accent,
+              },
+            ]}
+          >
+            <Text style={[styles.duaArabic, { color: colors.primary }]}>
               {t.about.duaText}
             </Text>
             <Text style={[styles.duaTranslation, { color: colors.textSecondary, fontSize: fonts.xs }]}>
@@ -77,16 +118,27 @@ export default function AboutScreen() {
             </Text>
 
             <TouchableOpacity
-              style={[styles.prayButton, prayed && styles.prayButtonActive]}
+              style={[
+                styles.prayButton,
+                {
+                  backgroundColor: colors.surface,
+                  borderColor: prayed ? colors.error : colors.borderLight,
+                },
+              ]}
               onPress={() => setPrayed(true)}
               activeOpacity={0.8}
             >
               <Ionicons
                 name={prayed ? 'heart' : 'heart-outline'}
-                size={18}
-                color={prayed ? '#D32F2F' : '#1B5E20'}
+                size={16}
+                color={prayed ? colors.error : colors.accent}
               />
-              <Text style={[styles.prayButtonText, prayed && styles.prayButtonTextActive]}>
+              <Text
+                style={[
+                  styles.prayButtonText,
+                  { color: prayed ? colors.error : colors.primary },
+                ]}
+              >
                 {prayed ? t.about.ameenDone : t.about.sayAmeen}
               </Text>
             </TouchableOpacity>
@@ -94,51 +146,87 @@ export default function AboutScreen() {
         </View>
 
         {/* Section 2: The Courses & Curricula */}
-        <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
           <View style={styles.cardHeader}>
-            <View style={[styles.iconBox, { backgroundColor: '#0D47A118' }]}>
-              <Ionicons name="book-outline" size={22} color="#0D47A1" />
+            <View
+              style={[
+                styles.iconBox,
+                {
+                  backgroundColor: colors.surfaceVariant,
+                  borderColor: colors.borderLight,
+                },
+              ]}
+            >
+              <Ionicons name="book-outline" size={18} color={colors.primary} />
             </View>
             <View style={styles.headerTextGroup}>
-              <Text style={[styles.cardTitle, { color: colors.text, fontSize: fonts.lg }]}>
+              <Text
+                style={[
+                  styles.cardTitle,
+                  { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.about.curriculaTitle}
               </Text>
-              <Text style={[styles.cardSubtitle, { color: colors.textSecondary, fontSize: fonts.xs }]}>
+              <Text
+                style={[
+                  styles.cardSubtitle,
+                  { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.about.curriculaSubtitle}
               </Text>
             </View>
           </View>
 
-          <Text style={[styles.cardBody, { color: colors.textSecondary, fontSize: fonts.md }]}>
-            <Text style={{ fontStyle: 'italic', fontWeight: '600' }}>{t.about.hadithKnowledgeQuote}</Text> {t.about.hadithKnowledgeSource}
+          <Text
+            style={[
+              styles.cardBody,
+              { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
+            <Text style={{ fontStyle: 'italic', fontWeight: '600' }}>
+              {t.about.hadithKnowledgeQuote}
+            </Text>{' '}
+            {t.about.hadithKnowledgeSource}
           </Text>
 
-          <Text style={[styles.cardBody, { color: colors.textSecondary, fontSize: fonts.md, marginTop: 4 }]}>
+          <Text
+            style={[
+              styles.cardBody,
+              {
+                color: colors.textSecondary,
+                fontSize: fonts.sm,
+                marginTop: 4,
+                writingDirection: isRTL ? 'rtl' : 'ltr',
+              },
+            ]}
+          >
             {t.about.curriculaBody}
           </Text>
 
           {/* Features List */}
           <View style={styles.pillarList}>
             <View style={styles.pillarRow}>
-              <Ionicons name="checkmark-circle" size={18} color="#0D47A1" />
+              <Ionicons name="checkmark-outline" size={16} color={colors.primary} />
               <Text style={[styles.pillarText, { color: colors.text }]}>
-                <Text style={{ fontWeight: '700' }}>{t.about.pillarCurricula} </Text>
+                <Text style={{ fontWeight: '600' }}>{t.about.pillarCurricula} </Text>
                 {t.about.pillarCurriculaDesc}
               </Text>
             </View>
 
             <View style={styles.pillarRow}>
-              <Ionicons name="checkmark-circle" size={18} color="#0D47A1" />
+              <Ionicons name="checkmark-outline" size={16} color={colors.primary} />
               <Text style={[styles.pillarText, { color: colors.text }]}>
-                <Text style={{ fontWeight: '700' }}>{t.about.pillarOffline} </Text>
+                <Text style={{ fontWeight: '600' }}>{t.about.pillarOffline} </Text>
                 {t.about.pillarOfflineDesc}
               </Text>
             </View>
 
             <View style={styles.pillarRow}>
-              <Ionicons name="checkmark-circle" size={18} color="#0D47A1" />
+              <Ionicons name="checkmark-outline" size={16} color={colors.primary} />
               <Text style={[styles.pillarText, { color: colors.text }]}>
-                <Text style={{ fontWeight: '700' }}>{t.about.pillarResume} </Text>
+                <Text style={{ fontWeight: '600' }}>{t.about.pillarResume} </Text>
                 {t.about.pillarResumeDesc}
               </Text>
             </View>
@@ -146,26 +234,62 @@ export default function AboutScreen() {
         </View>
 
         {/* Section 3: What is Bunyan? */}
-        <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+        <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
           <View style={styles.cardHeader}>
-            <View style={[styles.iconBox, { backgroundColor: '#BF360C18' }]}>
-              <Ionicons name="layers" size={22} color="#BF360C" />
+            <View
+              style={[
+                styles.iconBox,
+                {
+                  backgroundColor: colors.surfaceVariant,
+                  borderColor: colors.borderLight,
+                },
+              ]}
+            >
+              <Ionicons name="layers-outline" size={18} color={colors.accent} />
             </View>
             <View style={styles.headerTextGroup}>
-              <Text style={[styles.cardTitle, { color: colors.text, fontSize: fonts.lg }]}>
+              <Text
+                style={[
+                  styles.cardTitle,
+                  { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.about.bunyanTitle}
               </Text>
-              <Text style={[styles.cardSubtitle, { color: colors.textSecondary, fontSize: fonts.xs }]}>
+              <Text
+                style={[
+                  styles.cardSubtitle,
+                  { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.about.bunyanSubtitle}
               </Text>
             </View>
           </View>
 
-          <Text style={[styles.cardBody, { color: colors.textSecondary, fontSize: fonts.md }]}>
-            <Text style={{ fontStyle: 'italic', fontWeight: '600' }}>{t.about.hadithBunyanQuote}</Text> {t.about.hadithBunyanSource}
+          <Text
+            style={[
+              styles.cardBody,
+              { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
+            <Text style={{ fontStyle: 'italic', fontWeight: '600' }}>
+              {t.about.hadithBunyanQuote}
+            </Text>{' '}
+            {t.about.hadithBunyanSource}
           </Text>
 
-          <Text style={[styles.cardBody, { color: colors.textSecondary, fontSize: fonts.md, marginTop: 4 }]}>
+          <Text
+            style={[
+              styles.cardBody,
+              {
+                color: colors.textSecondary,
+                fontSize: fonts.sm,
+                marginTop: 4,
+                writingDirection: isRTL ? 'rtl' : 'ltr',
+              },
+            ]}
+          >
             {t.about.bunyanBody}
           </Text>
 
@@ -174,18 +298,21 @@ export default function AboutScreen() {
             onPress={handleShareApp}
             activeOpacity={0.8}
           >
-            <Ionicons name="share-social-outline" size={18} color="#FFFFFF" />
+            <Ionicons name="share-social-outline" size={16} color="#FFFFFF" />
             <Text style={styles.shareBtnText}>{t.about.shareBtn}</Text>
           </TouchableOpacity>
         </View>
 
         {/* Replay Onboarding Button */}
         <TouchableOpacity
-          style={[styles.replayBtn, { borderColor: colors.border, backgroundColor: colors.surface }]}
+          style={[
+            styles.replayBtn,
+            { borderColor: colors.borderLight, backgroundColor: colors.surface },
+          ]}
           onPress={() => router.push('/onboarding')}
-          activeOpacity={0.7}
+          activeOpacity={0.75}
         >
-          <Ionicons name="refresh-outline" size={18} color={colors.primary} />
+          <Ionicons name="refresh-outline" size={16} color={colors.primary} />
           <Text style={[styles.replayBtnText, { color: colors.primary }]}>
             {t.about.walkthroughBtn}
           </Text>
@@ -205,51 +332,47 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     padding: Spacing.lg,
     paddingBottom: Spacing.xxxl,
-    gap: Spacing.lg,
+    gap: Spacing.md,
   },
   bannerCard: {
     padding: Spacing.xl,
-    borderRadius: BorderRadius.xl,
+    borderRadius: BorderRadius.md,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 4,
   },
   arabicLogo: {
-    fontSize: 34,
-    fontWeight: '900',
-    color: '#FFFFFF',
+    fontSize: 30,
+    fontWeight: '800',
     marginBottom: 4,
+    letterSpacing: 1,
   },
   bannerTitle: {
-    fontSize: 20,
-    fontWeight: '800',
+    fontSize: 18,
+    fontWeight: '700',
     color: '#FFFFFF',
     marginBottom: 4,
   },
   bannerSubtitle: {
-    fontSize: 13,
-    color: '#E8F5E9',
+    fontSize: 12,
     textAlign: 'center',
-    fontWeight: '500',
+    fontWeight: '400',
+    lineHeight: 18,
   },
   card: {
-    padding: Spacing.lg,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    gap: Spacing.md,
+    padding: Spacing.md,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    gap: Spacing.sm,
   },
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: Spacing.md,
+    gap: Spacing.sm,
   },
   iconBox: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 36,
+    height: 36,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -257,59 +380,51 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   cardTitle: {
-    fontWeight: '700',
+    fontWeight: '600',
   },
   cardSubtitle: {
-    fontWeight: '600',
-    marginTop: 2,
+    fontWeight: '500',
+    marginTop: 1,
   },
   cardBody: {
-    lineHeight: 22,
+    lineHeight: 20,
   },
   duaCard: {
-    padding: Spacing.lg,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    gap: 8,
+    padding: Spacing.md,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderLeftWidth: 3,
+    gap: 6,
+    marginTop: 4,
   },
   duaArabic: {
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 15,
+    fontWeight: '600',
     textAlign: 'center',
     lineHeight: 26,
   },
   duaTranslation: {
     textAlign: 'center',
-    lineHeight: 18,
+    lineHeight: 17,
     fontStyle: 'italic',
   },
   prayButton: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E8F5E9',
-    borderRadius: BorderRadius.md,
-    paddingVertical: 10,
-    marginTop: 6,
-    gap: 8,
-    borderWidth: 1,
-    borderColor: '#A5D6A7',
-  },
-  prayButtonActive: {
-    backgroundColor: '#FFEBEE',
-    borderColor: '#FFCDD2',
+    borderRadius: BorderRadius.xs,
+    paddingVertical: 8,
+    marginTop: 4,
+    gap: 6,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   prayButtonText: {
-    fontSize: 13,
-    fontWeight: '700',
-    color: '#1B5E20',
-  },
-  prayButtonTextActive: {
-    color: '#C62828',
+    fontSize: 12,
+    fontWeight: '600',
   },
   pillarList: {
-    gap: 10,
-    marginTop: 4,
+    gap: 8,
+    marginTop: 2,
   },
   pillarRow: {
     flexDirection: 'row',
@@ -318,32 +433,32 @@ const styles = StyleSheet.create({
   },
   pillarText: {
     flex: 1,
-    fontSize: 13,
-    lineHeight: 19,
+    fontSize: 12,
+    lineHeight: 18,
   },
   shareBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 14,
-    borderRadius: BorderRadius.md,
-    gap: 8,
+    paddingVertical: 11,
+    borderRadius: BorderRadius.xs,
+    gap: 6,
     marginTop: 4,
   },
   shareBtnText: {
     color: '#FFFFFF',
-    fontSize: 14,
-    fontWeight: '700',
+    fontSize: 13,
+    fontWeight: '600',
   },
   replayBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 14,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    gap: 8,
-    marginTop: 4,
+    paddingVertical: 11,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
+    gap: 6,
+    marginTop: 2,
   },
   replayBtnText: {
     fontSize: 13,

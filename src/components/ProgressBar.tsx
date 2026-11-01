@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useTheme, useScaledFont } from '../hooks';
+import { BorderRadius } from '../theme';
 
 interface Props {
   percentage: number;
@@ -10,14 +11,14 @@ interface Props {
   height?: number;
 }
 
-export const ProgressBar = memo(({ percentage, completed, total, showLabel = true, height = 8 }: Props) => {
+export const ProgressBar = memo(({ percentage, completed, total, showLabel = true, height = 5 }: Props) => {
   const { colors } = useTheme();
   const fonts = useScaledFont();
 
   return (
     <View style={styles.container}>
       <View style={[styles.track, { backgroundColor: colors.progressTrack, height }]}>
-        <View style={[styles.fill, { backgroundColor: colors.progressFill, width: `${percentage}%`, height }]} />
+        <View style={[styles.fill, { backgroundColor: colors.primary, width: `${percentage}%`, height }]} />
       </View>
       {showLabel && (
         <Text style={[styles.label, { color: colors.textSecondary, fontSize: fonts.xs }]}>
@@ -33,11 +34,11 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   track: {
-    borderRadius: 4,
+    borderRadius: BorderRadius.xs,
     overflow: 'hidden',
   },
   fill: {
-    borderRadius: 4,
+    borderRadius: BorderRadius.xs,
   },
   label: {
     fontWeight: '500',

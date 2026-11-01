@@ -17,7 +17,7 @@ interface Props {
 
 const TYPE_ICONS: Record<string, keyof typeof Ionicons.glyphMap> = {
   video: 'videocam-outline',
-  audio: 'musical-notes-outline',
+  audio: 'mic-outline',
   pdf: 'document-text-outline',
 };
 
@@ -35,36 +35,64 @@ export const LessonRow = memo(({ lesson, index, progress, isBookmarked, isDownlo
 
   return (
     <TouchableOpacity
-      style={[styles.row, { backgroundColor: colors.surface, borderColor: colors.border }]}
-      onPress={() => onPress(lesson)}
-      activeOpacity={0.7}
-    >
-      <View style={[
-        styles.indexCircle,
+      style={[
+        styles.row,
         {
-          backgroundColor: isCompleted ? colors.success : isInProgress ? colors.primaryLight : colors.surfaceVariant,
+          backgroundColor: colors.surface,
+          borderColor: colors.borderLight,
         },
-      ]}>
+      ]}
+      onPress={() => onPress(lesson)}
+      activeOpacity={0.75}
+    >
+      <View
+        style={[
+          styles.indexBox,
+          {
+            backgroundColor: isCompleted
+              ? colors.primary
+              : isInProgress
+              ? colors.surfaceVariant
+              : colors.surfaceVariant,
+            borderColor: isInProgress ? colors.primary : colors.borderLight,
+          },
+        ]}
+      >
         {isCompleted ? (
-          <Ionicons name="checkmark" size={16} color="#fff" />
+          <Ionicons name="checkmark" size={14} color="#FFFFFF" />
         ) : (
-          <Text style={[styles.indexText, { color: isInProgress ? '#fff' : colors.textSecondary, fontSize: fonts.sm }]}>
+          <Text
+            style={[
+              styles.indexText,
+              {
+                color: isInProgress ? colors.primary : colors.textSecondary,
+                fontSize: fonts.xs,
+              },
+            ]}
+          >
             {index}
           </Text>
         )}
       </View>
 
       <View style={styles.content}>
-        <Text style={[styles.title, { color: colors.text, fontSize: fonts.md }]} numberOfLines={1}>
+        <Text
+          style={[styles.title, { color: colors.text, fontSize: fonts.sm }]}
+          numberOfLines={2}
+        >
           {lesson.title}
         </Text>
         <View style={styles.meta}>
-          <Ionicons name={TYPE_ICONS[lesson.type] || 'play-outline'} size={14} color={colors.textTertiary} />
-          <Text style={[styles.metaText, { color: colors.textTertiary, fontSize: fonts.xs }]}>
+          <Ionicons
+            name={TYPE_ICONS[lesson.type] || 'mic-outline'}
+            size={13}
+            color={colors.textSecondary}
+          />
+          <Text style={[styles.metaText, { color: colors.textSecondary, fontSize: fonts.xs }]}>
             {lesson.type.charAt(0).toUpperCase() + lesson.type.slice(1)} · {formatDuration(lesson.duration)}
           </Text>
           {isDownloaded && (
-            <Ionicons name="cloud-done-outline" size={14} color={colors.success} style={{ marginLeft: 6 }} />
+            <Ionicons name="cloud-done" size={14} color={colors.primary} style={{ marginLeft: 6 }} />
           )}
         </View>
         {isInProgress && progress && (
@@ -74,23 +102,27 @@ export const LessonRow = memo(({ lesson, index, progress, isBookmarked, isDownlo
                 style={[
                   styles.miniProgressFill,
                   {
-                    backgroundColor: colors.progressFill,
+                    backgroundColor: colors.primary,
                     width: `${Math.round((progress.lastPositionSeconds / progress.durationSeconds) * 100)}%`,
                   },
                 ]}
               />
             </View>
-            <Text style={[styles.resumeText, { color: colors.primaryLight, fontSize: fonts.xs }]}>
+            <Text style={[styles.resumeText, { color: colors.primary, fontSize: fonts.xs }]}>
               {formatDuration(Math.round(progress.lastPositionSeconds))} / {formatDuration(progress.durationSeconds)}
             </Text>
           </View>
         )}
       </View>
 
-      <TouchableOpacity onPress={() => onBookmark(lesson.id, lesson.courseId)} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
+      <TouchableOpacity
+        onPress={() => onBookmark(lesson.id, lesson.courseId)}
+        hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+        accessibilityLabel="حفظ الدرس"
+      >
         <Ionicons
           name={isBookmarked ? 'bookmark' : 'bookmark-outline'}
-          size={22}
+          size={20}
           color={isBookmarked ? colors.accent : colors.textTertiary}
         />
       </TouchableOpacity>
@@ -102,16 +134,18 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: Spacing.md,
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.md,
     borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    marginBottom: Spacing.sm,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginBottom: Spacing.xs,
     gap: Spacing.md,
   },
-  indexCircle: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+  indexBox: {
+    width: 28,
+    height: 28,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -122,17 +156,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontWeight: '700',
+    fontWeight: '600',
     marginBottom: 4,
     writingDirection: 'rtl',
     textAlign: 'left',
+    lineHeight: 20,
   },
   meta: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
   },
-  metaText: {},
+  metaText: {
+    fontWeight: '400',
+  },
   resumeRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -141,13 +178,13 @@ const styles = StyleSheet.create({
   },
   miniProgress: {
     flex: 1,
-    height: 4,
-    borderRadius: 2,
+    height: 3,
+    borderRadius: BorderRadius.xs,
     overflow: 'hidden',
   },
   miniProgressFill: {
     height: '100%',
-    borderRadius: 2,
+    borderRadius: BorderRadius.xs,
   },
   resumeText: {
     fontWeight: '500',

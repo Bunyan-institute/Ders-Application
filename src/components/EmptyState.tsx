@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useTheme, useScaledFont } from '../hooks';
-import { Spacing } from '../theme';
+import { Spacing, BorderRadius } from '../theme';
 
 interface Props {
   icon: keyof typeof Ionicons.glyphMap;
@@ -16,9 +16,21 @@ export const EmptyState = ({ icon, title, subtitle }: Props) => {
 
   return (
     <View style={styles.container}>
-      <Ionicons name={icon} size={64} color={colors.textTertiary} />
-      <Text style={[styles.title, { color: colors.text, fontSize: fonts.xl }]}>{title}</Text>
-      <Text style={[styles.subtitle, { color: colors.textSecondary, fontSize: fonts.md }]}>{subtitle}</Text>
+      <View
+        style={[
+          styles.iconBox,
+          {
+            backgroundColor: colors.surfaceVariant,
+            borderColor: colors.borderLight,
+          },
+        ]}
+      >
+        <Ionicons name={icon} size={36} color={colors.accent} />
+      </View>
+      <Text style={[styles.title, { color: colors.text, fontSize: fonts.lg }]}>{title}</Text>
+      <Text style={[styles.subtitle, { color: colors.textSecondary, fontSize: fonts.sm }]}>
+        {subtitle}
+      </Text>
     </View>
   );
 };
@@ -29,14 +41,24 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: Spacing.xxxl,
-    gap: Spacing.md,
+    gap: Spacing.sm,
+  },
+  iconBox: {
+    width: 64,
+    height: 64,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: Spacing.xs,
   },
   title: {
-    fontWeight: '700',
+    fontWeight: '600',
     textAlign: 'center',
   },
   subtitle: {
     textAlign: 'center',
-    lineHeight: 22,
+    lineHeight: 20,
+    maxWidth: 360,
   },
 });

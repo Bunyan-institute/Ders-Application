@@ -16,7 +16,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { useSettingsStore } from '../src/store';
 import { useTheme, useTranslation } from '../src/hooks';
-import { Spacing, BorderRadius, FontSize } from '../src/theme';
+import { Spacing, BorderRadius } from '../src/theme';
 import { getWelcomeSlides, WelcomeSlide } from '../src/data/welcomeData';
 
 export default function OnboardingScreen() {
@@ -38,7 +38,7 @@ export default function OnboardingScreen() {
   const handleNext = () => {
     if (currentIndex < totalSlides - 1) {
       const nextIndex = currentIndex + 1;
-      flatListRef.current?.scrollToIndex({ index: nextIndex, animated: true });
+      flatListRef.current?.scrollToIndex({ index: nextIndex, animated: false });
       setCurrentIndex(nextIndex);
     } else {
       completeOnboarding();
@@ -48,14 +48,14 @@ export default function OnboardingScreen() {
   const handleBack = () => {
     if (currentIndex > 0) {
       const prevIndex = currentIndex - 1;
-      flatListRef.current?.scrollToIndex({ index: prevIndex, animated: true });
+      flatListRef.current?.scrollToIndex({ index: prevIndex, animated: false });
       setCurrentIndex(prevIndex);
     }
   };
 
   const handleJumpToSlide = (index: number) => {
     if (index >= 0 && index < totalSlides) {
-      flatListRef.current?.scrollToIndex({ index, animated: true });
+      flatListRef.current?.scrollToIndex({ index, animated: false });
       setCurrentIndex(index);
     }
   };
@@ -73,7 +73,7 @@ export default function OnboardingScreen() {
     }
   };
 
-  const renderSlide = ({ item, index }: { item: WelcomeSlide; index: number }) => (
+  const renderSlide = ({ item }: { item: WelcomeSlide; index: number }) => (
     <View style={[styles.slideContainer, { width }]}>
       <ScrollView
         contentContainerStyle={styles.scrollContent}
@@ -85,48 +85,48 @@ export default function OnboardingScreen() {
           style={[
             styles.badgeRow,
             {
-              backgroundColor: isDark ? item.highlightColor + '25' : item.highlightColor + '12',
-              borderColor: item.highlightColor + '40',
+              backgroundColor: colors.surfaceVariant,
+              borderColor: colors.borderLight,
             },
           ]}
         >
-          <Text style={[styles.arabicBadgeText, { color: item.highlightColor }]}>
+          <Text style={[styles.arabicBadgeText, { color: colors.primary }]}>
             {item.arabicBadge}
           </Text>
-          <View style={[styles.badgeDivider, { backgroundColor: item.highlightColor + '50' }]} />
-          <Text style={[styles.badgeText, { color: item.highlightColor }]}>
+          <View style={[styles.badgeDivider, { backgroundColor: colors.border }]} />
+          <Text style={[styles.badgeText, { color: colors.textSecondary }]}>
             {item.badge}
           </Text>
         </View>
 
-        {/* Hero Icon */}
+        {/* Scholarly Hero Icon */}
         <View
           style={[
             styles.iconContainer,
             {
-              backgroundColor: isDark ? item.highlightColor + '30' : item.highlightColor + '15',
-              borderColor: item.highlightColor + '40',
+              backgroundColor: colors.surfaceVariant,
+              borderColor: colors.borderLight,
             },
           ]}
         >
-          <Ionicons name={item.icon as any} size={58} color={item.highlightColor} />
+          <Ionicons name={item.icon as any} size={36} color={colors.primary} />
         </View>
 
         {/* Title */}
         <Text style={[styles.title, { color: colors.text }]}>{item.title}</Text>
 
-        {/* Calligraphy Quote Card */}
+        {/* Classical Calligraphy Quote Card */}
         <View
           style={[
             styles.calligraphyCard,
             {
-              backgroundColor: colors.surface,
-              borderColor: colors.border,
-              borderLeftColor: item.accentColor,
+              backgroundColor: colors.surfaceVariant,
+              borderColor: colors.borderLight,
+              borderLeftColor: colors.accent,
             },
           ]}
         >
-          <Text style={[styles.arabicQuote, { color: item.highlightColor }]}>
+          <Text style={[styles.arabicQuote, { color: colors.primary }]}>
             {item.arabicQuote}
           </Text>
           <Text style={[styles.quoteTranslation, { color: colors.textSecondary }]}>
@@ -145,18 +145,18 @@ export default function OnboardingScreen() {
             style={[
               styles.specialBox,
               {
-                backgroundColor: isDark ? '#162817' : '#F1F8E9',
-                borderColor: isDark ? '#2E7D32' : '#C8E6C9',
+                backgroundColor: colors.surfaceVariant,
+                borderColor: colors.borderLight,
               },
             ]}
           >
             <View style={styles.specialBoxHeader}>
-              <Ionicons name="hand-right-outline" size={18} color={item.accentColor} />
-              <Text style={[styles.specialBoxTag, { color: '#2E7D32' }]}>
+              <Ionicons name="heart-outline" size={16} color={colors.accent} />
+              <Text style={[styles.specialBoxTag, { color: colors.primary }]}>
                 {item.duaCard.tag}
               </Text>
             </View>
-            <Text style={[styles.duaArabic, { color: isDark ? '#A5D6A7' : '#1B5E20' }]}>
+            <Text style={[styles.duaArabic, { color: colors.primary }]}>
               {item.duaCard.arabic}
             </Text>
             <Text style={[styles.duaTranslation, { color: colors.textSecondary }]}>
@@ -166,22 +166,23 @@ export default function OnboardingScreen() {
             <TouchableOpacity
               style={[
                 styles.prayButton,
-                prayed && styles.prayButtonActive,
-                { borderColor: isDark ? '#388E3C' : '#A5D6A7' },
+                {
+                  backgroundColor: colors.surface,
+                  borderColor: prayed ? colors.error : colors.borderLight,
+                },
               ]}
               onPress={() => setPrayed(prev => !prev)}
               activeOpacity={0.8}
             >
               <Ionicons
                 name={prayed ? 'heart' : 'heart-outline'}
-                size={18}
-                color={prayed ? '#D32F2F' : item.highlightColor}
+                size={16}
+                color={prayed ? colors.error : colors.accent}
               />
               <Text
                 style={[
                   styles.prayButtonText,
-                  prayed && styles.prayButtonTextActive,
-                  !prayed && { color: item.highlightColor },
+                  { color: prayed ? colors.error : colors.primary },
                 ]}
               >
                 {prayed ? item.duaCard.buttonActiveText : item.duaCard.buttonText}
@@ -196,15 +197,21 @@ export default function OnboardingScreen() {
             style={[
               styles.specialBox,
               {
-                backgroundColor: isDark ? '#102236' : '#E3F2FD',
-                borderColor: isDark ? '#1E88E5' : '#BBDEFB',
+                backgroundColor: colors.surfaceVariant,
+                borderColor: colors.borderLight,
               },
             ]}
           >
             <View style={styles.specialBoxHeader}>
-              <Ionicons name="library-outline" size={18} color="#0288D1" />
-              <Text style={[styles.specialBoxTag, { color: '#0288D1' }]}>
-                {language === 'ar' ? 'العلوم الشرعية الأساسية في المنهج' : language === 'am' ? 'በስርዓተ-ትምህርቱ ውስጥ የተካተቱ ዋና ሳይንሶች' : language === 'om' ? "Barnoota Bu'uuraa Kharrii Keessatti" : 'Core Sciences in Curriculum'}
+              <Ionicons name="library-outline" size={16} color={colors.primary} />
+              <Text style={[styles.specialBoxTag, { color: colors.primary }]}>
+                {language === 'ar'
+                  ? 'العلوم الشرعية الأساسية في المنهج'
+                  : language === 'am'
+                  ? 'በስርዓተ-ትምህርቱ ውስጥ የተካተቱ ዋና ሳይንሶች'
+                  : language === 'om'
+                  ? "Barnoota Bu'uuraa Kharrii Keessatti"
+                  : 'Core Disciplines in Curriculum'}
               </Text>
             </View>
             <View style={styles.categoryPillsGrid}>
@@ -214,16 +221,16 @@ export default function OnboardingScreen() {
                   style={[
                     styles.categoryPill,
                     {
-                      backgroundColor: isDark ? colors.surface : '#FFFFFF',
-                      borderColor: cat.color + '40',
+                      backgroundColor: colors.surface,
+                      borderColor: colors.borderLight,
                     },
                   ]}
                 >
-                  <View style={[styles.categoryDot, { backgroundColor: cat.color }]} />
+                  <View style={[styles.categoryDot, { backgroundColor: colors.accent }]} />
                   <Text style={[styles.categoryPillName, { color: colors.text }]}>
                     {cat.name}
                   </Text>
-                  <Text style={[styles.categoryPillArabic, { color: cat.color }]}>
+                  <Text style={[styles.categoryPillArabic, { color: colors.primary }]}>
                     {cat.arabic}
                   </Text>
                 </View>
@@ -238,15 +245,21 @@ export default function OnboardingScreen() {
             style={[
               styles.specialBox,
               {
-                backgroundColor: isDark ? '#2B1713' : '#FBE9E7',
-                borderColor: isDark ? '#D84315' : '#FFCCBC',
+                backgroundColor: colors.surfaceVariant,
+                borderColor: colors.borderLight,
               },
             ]}
           >
             <View style={styles.specialBoxHeader}>
-              <Ionicons name="sparkles-outline" size={18} color="#E65100" />
-              <Text style={[styles.specialBoxTag, { color: '#BF360C' }]}>
-                {language === 'ar' ? 'أركان وركائز مبادرة بنيان' : language === 'am' ? 'የቡንያን መሰረታዊ ምሶሶዎች' : language === 'om' ? "Bu'uuraalee Masaraa Bunyaan" : 'Foundation of Bunyan'}
+              <Ionicons name="sparkles-outline" size={16} color={colors.accent} />
+              <Text style={[styles.specialBoxTag, { color: colors.primary }]}>
+                {language === 'ar'
+                  ? 'أركان وركائز مبادرة بنيان'
+                  : language === 'am'
+                  ? 'የቡንያን መሰረታዊ ምሶሶዎች'
+                  : language === 'om'
+                  ? "Bu'uuraalee Masaraa Bunyaan"
+                  : 'Foundations of Bunyan'}
               </Text>
             </View>
             <View style={styles.pillarsContainer}>
@@ -256,12 +269,12 @@ export default function OnboardingScreen() {
                   style={[
                     styles.pillarItem,
                     {
-                      backgroundColor: isDark ? colors.surface : '#FFFFFF',
-                      borderColor: colors.border,
+                      backgroundColor: colors.surface,
+                      borderColor: colors.borderLight,
                     },
                   ]}
                 >
-                  <Ionicons name={pillar.icon as any} size={20} color={item.highlightColor} />
+                  <Ionicons name={pillar.icon as any} size={18} color={colors.accent} />
                   <View style={{ flex: 1 }}>
                     <Text style={[styles.pillarTitle, { color: colors.text }]}>
                       {pillar.title}
@@ -285,17 +298,20 @@ export default function OnboardingScreen() {
                 styles.highlightRow,
                 {
                   backgroundColor: colors.surface,
-                  borderColor: colors.border,
+                  borderColor: colors.borderLight,
                 },
               ]}
             >
               <View
                 style={[
                   styles.highlightIconBox,
-                  { backgroundColor: isDark ? item.highlightColor + '20' : item.highlightColor + '12' },
+                  {
+                    backgroundColor: colors.surfaceVariant,
+                    borderColor: colors.borderLight,
+                  },
                 ]}
               >
-                <Ionicons name={highlight.icon as any} size={20} color={item.highlightColor} />
+                <Ionicons name={highlight.icon as any} size={18} color={colors.accent} />
               </View>
               <View style={styles.highlightTextContainer}>
                 <Text style={[styles.highlightTitle, { color: colors.text }]}>
@@ -315,10 +331,10 @@ export default function OnboardingScreen() {
   return (
     <SafeAreaView style={[styles.safeArea, { backgroundColor: colors.background }]} edges={['top', 'bottom']}>
       {/* Top Header Bar */}
-      <View style={[styles.topBar, { borderBottomColor: colors.border }]}>
+      <View style={[styles.topBar, { borderBottomColor: colors.borderLight }]}>
         <View style={styles.brandGroup}>
-          <Text style={[styles.brandTitle, { color: currentSlide.highlightColor }]}>بُنْيَان</Text>
-          <View style={[styles.stepCapsule, { backgroundColor: isDark ? colors.surfaceVariant : '#EEEEEE' }]}>
+          <Text style={[styles.brandTitle, { color: colors.primary }]}>بُنْيَان</Text>
+          <View style={[styles.stepCapsule, { backgroundColor: colors.surfaceVariant, borderColor: colors.borderLight }]}>
             <Text style={[styles.stepText, { color: colors.textSecondary }]}>
               {currentIndex + 1} / {totalSlides}
             </Text>
@@ -326,13 +342,13 @@ export default function OnboardingScreen() {
         </View>
 
         <TouchableOpacity
-          style={[styles.skipBtn, { backgroundColor: isDark ? colors.surfaceVariant : '#EEEEEE' }]}
+          style={[styles.skipBtn, { backgroundColor: colors.surfaceVariant, borderColor: colors.borderLight }]}
           onPress={completeOnboarding}
           activeOpacity={0.7}
           accessibilityLabel="Skip onboarding and go to lessons"
         >
           <Text style={[styles.skipText, { color: colors.textSecondary }]}>{t.onboarding.skip}</Text>
-          <Ionicons name={isRTL ? "chevron-back" : "chevron-forward"} size={14} color={colors.textSecondary} />
+          <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={14} color={colors.textSecondary} />
         </TouchableOpacity>
       </View>
 
@@ -354,8 +370,8 @@ export default function OnboardingScreen() {
         })}
         onScrollToIndexFailed={info => {
           setTimeout(() => {
-            flatListRef.current?.scrollToIndex({ index: info.index, animated: true });
-          }, 100);
+            flatListRef.current?.scrollToIndex({ index: info.index, animated: false });
+          }, 50);
         }}
       />
 
@@ -365,7 +381,7 @@ export default function OnboardingScreen() {
           styles.footer,
           {
             backgroundColor: colors.background,
-            borderTopColor: colors.border,
+            borderTopColor: colors.borderLight,
           },
         ]}
       >
@@ -388,8 +404,8 @@ export default function OnboardingScreen() {
                   style={[
                     styles.dot,
                     isActive
-                      ? [styles.activeDot, { backgroundColor: currentSlide.highlightColor }]
-                      : [styles.inactiveDot, { backgroundColor: isDark ? '#3E3E3E' : '#D5D5D5' }],
+                      ? [styles.activeDot, { backgroundColor: colors.primary }]
+                      : [styles.inactiveDot, { backgroundColor: colors.border }],
                   ]}
                 />
               </TouchableOpacity>
@@ -401,12 +417,18 @@ export default function OnboardingScreen() {
         <View style={styles.buttonsRow}>
           {currentIndex > 0 ? (
             <TouchableOpacity
-              style={[styles.backBtn, { borderColor: colors.border, backgroundColor: colors.surface }]}
+              style={[
+                styles.backBtn,
+                {
+                  borderColor: colors.border,
+                  backgroundColor: colors.surface,
+                },
+              ]}
               onPress={handleBack}
-              activeOpacity={0.7}
+              activeOpacity={0.75}
               accessibilityLabel="Go back to previous slide"
             >
-              <Ionicons name={isRTL ? "arrow-forward" : "arrow-back"} size={18} color={colors.text} />
+              <Ionicons name={isRTL ? 'arrow-forward' : 'arrow-back'} size={16} color={colors.text} />
               <Text style={[styles.backBtnText, { color: colors.text }]}>{t.onboarding.back}</Text>
             </TouchableOpacity>
           ) : (
@@ -416,7 +438,7 @@ export default function OnboardingScreen() {
           <TouchableOpacity
             style={[
               styles.actionBtn,
-              { backgroundColor: currentSlide.highlightColor },
+              { backgroundColor: colors.primary },
               currentIndex === 0 ? styles.actionBtnFull : styles.actionBtnFlex,
             ]}
             onPress={handleNext}
@@ -429,8 +451,14 @@ export default function OnboardingScreen() {
                 : currentSlide.nextStepTitle}
             </Text>
             <Ionicons
-              name={currentIndex === totalSlides - 1 ? 'checkmark-circle-outline' : isRTL ? 'arrow-back' : 'arrow-forward'}
-              size={20}
+              name={
+                currentIndex === totalSlides - 1
+                  ? 'checkmark-outline'
+                  : isRTL
+                  ? 'arrow-back'
+                  : 'arrow-forward'
+              }
+              size={18}
               color="#FFFFFF"
             />
           </TouchableOpacity>
@@ -462,29 +490,32 @@ const styles = StyleSheet.create({
   },
   brandTitle: {
     fontSize: 22,
-    fontWeight: '800',
+    fontWeight: '700',
+    letterSpacing: 0.5,
   },
   stepCapsule: {
     paddingVertical: 3,
     paddingHorizontal: 8,
-    borderRadius: BorderRadius.full,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   stepText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontWeight: '600',
     letterSpacing: 0.3,
   },
   skipBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: BorderRadius.full,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 4,
   },
   skipText: {
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   slideContainer: {
     flex: 1,
@@ -501,81 +532,75 @@ const styles = StyleSheet.create({
   badgeRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 14,
-    borderRadius: BorderRadius.full,
-    borderWidth: 1,
-    marginBottom: Spacing.lg,
+    paddingVertical: 4,
+    paddingHorizontal: 12,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginBottom: Spacing.md,
     gap: 8,
   },
   arabicBadgeText: {
-    fontSize: 14,
-    fontWeight: '700',
+    fontSize: 13,
+    fontWeight: '600',
   },
   badgeDivider: {
     width: 1,
     height: 12,
   },
   badgeText: {
-    fontSize: 12,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
+    fontSize: 11,
+    fontWeight: '600',
+    letterSpacing: 0.3,
   },
   iconContainer: {
-    width: 100,
-    height: 100,
-    borderRadius: 50,
-    borderWidth: 1.5,
+    width: 64,
+    height: 64,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: Spacing.lg,
+    marginBottom: Spacing.md,
   },
   title: {
-    fontSize: 22,
-    fontWeight: '800',
+    fontSize: 20,
+    fontWeight: '700',
     textAlign: 'center',
     marginBottom: Spacing.md,
     lineHeight: 28,
   },
   calligraphyCard: {
     width: '100%',
-    padding: Spacing.lg,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    borderLeftWidth: 4,
+    padding: Spacing.md,
+    borderRadius: BorderRadius.sm,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderLeftWidth: 3,
     marginBottom: Spacing.md,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
-    shadowRadius: 3,
-    elevation: 1,
   },
   arabicQuote: {
-    fontSize: 18,
-    fontWeight: '700',
+    fontSize: 17,
+    fontWeight: '600',
     textAlign: 'center',
-    lineHeight: 30,
-    marginBottom: 8,
+    lineHeight: 28,
+    marginBottom: 6,
   },
   quoteTranslation: {
-    fontSize: 13,
+    fontSize: 12,
     fontStyle: 'italic',
     textAlign: 'center',
-    lineHeight: 19,
+    lineHeight: 18,
   },
   description: {
-    fontSize: 14,
+    fontSize: 13,
     lineHeight: 22,
     textAlign: 'center',
     marginBottom: Spacing.lg,
   },
   specialBox: {
     width: '100%',
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    padding: Spacing.lg,
-    marginBottom: Spacing.lg,
+    borderRadius: BorderRadius.sm,
+    borderWidth: StyleSheet.hairlineWidth,
+    padding: Spacing.md,
+    marginBottom: Spacing.md,
     gap: 8,
   },
   specialBoxHeader: {
@@ -583,19 +608,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 6,
-    marginBottom: 4,
+    marginBottom: 2,
   },
   specialBoxTag: {
-    fontSize: 12,
-    fontWeight: '700',
-    textTransform: 'uppercase',
+    fontSize: 11,
+    fontWeight: '600',
     letterSpacing: 0.5,
   },
   duaArabic: {
-    fontSize: 16,
-    fontWeight: '700',
+    fontSize: 15,
+    fontWeight: '600',
     textAlign: 'center',
-    lineHeight: 27,
+    lineHeight: 26,
   },
   duaTranslation: {
     fontSize: 12,
@@ -607,68 +631,60 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#E8F5E9',
-    borderRadius: BorderRadius.md,
-    paddingVertical: 10,
-    marginTop: 6,
-    gap: 8,
-    borderWidth: 1,
-  },
-  prayButtonActive: {
-    backgroundColor: '#FFEBEE',
-    borderColor: '#FFCDD2',
+    borderRadius: BorderRadius.xs,
+    paddingVertical: 8,
+    marginTop: 4,
+    gap: 6,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   prayButtonText: {
-    fontSize: 13,
-    fontWeight: '700',
-  },
-  prayButtonTextActive: {
-    color: '#C62828',
+    fontSize: 12,
+    fontWeight: '600',
   },
   categoryPillsGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 8,
+    gap: 6,
     justifyContent: 'center',
-    marginTop: 4,
+    marginTop: 2,
   },
   categoryPill: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 6,
-    paddingHorizontal: 12,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 6,
   },
   categoryDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
   },
   categoryPillName: {
-    fontSize: 12,
-    fontWeight: '700',
+    fontSize: 11,
+    fontWeight: '600',
   },
   categoryPillArabic: {
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: '600',
   },
   pillarsContainer: {
-    gap: 8,
-    marginTop: 4,
+    gap: 6,
+    marginTop: 2,
   },
   pillarItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: Spacing.md,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    gap: 12,
+    padding: Spacing.sm,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
+    gap: 10,
   },
   pillarTitle: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 12,
+    fontWeight: '600',
   },
   pillarSubtitle: {
     fontSize: 11,
@@ -676,20 +692,21 @@ const styles = StyleSheet.create({
   },
   highlightsContainer: {
     width: '100%',
-    gap: 10,
+    gap: 8,
   },
   highlightRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: Spacing.md,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    gap: 12,
+    padding: Spacing.sm,
+    borderRadius: BorderRadius.sm,
+    borderWidth: StyleSheet.hairlineWidth,
+    gap: 10,
   },
   highlightIconBox: {
-    width: 38,
-    height: 38,
-    borderRadius: 19,
+    width: 34,
+    height: 34,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -697,28 +714,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   highlightTitle: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 12,
+    fontWeight: '600',
     marginBottom: 2,
   },
   highlightDescription: {
-    fontSize: 12,
-    lineHeight: 17,
+    fontSize: 11,
+    lineHeight: 16,
   },
   footer: {
     maxWidth: 680,
     width: '100%',
     alignSelf: 'center',
     paddingHorizontal: Spacing.xl,
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderTopWidth: StyleSheet.hairlineWidth,
-    gap: 12,
+    gap: 10,
   },
   dotsRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 8,
+    gap: 6,
   },
   dotTouchTarget: {
     padding: 6,
@@ -729,19 +746,19 @@ const styles = StyleSheet.create({
     padding: 6,
   },
   dot: {
-    height: 8,
-    borderRadius: 4,
+    height: 4,
+    borderRadius: 2,
   },
   activeDot: {
-    width: 26,
+    width: 20,
   },
   inactiveDot: {
-    width: 8,
+    width: 6,
   },
   buttonsRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 10,
   },
   backBtnSpacer: {
     width: 0,
@@ -750,29 +767,24 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 16,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderRadius: BorderRadius.sm,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 6,
   },
   backBtnText: {
-    fontSize: 14,
-    fontWeight: '700',
+    fontSize: 13,
+    fontWeight: '600',
   },
   actionBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 14,
-    paddingHorizontal: 20,
-    borderRadius: BorderRadius.lg,
-    gap: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.12,
-    shadowRadius: 4,
-    elevation: 3,
+    paddingVertical: 12,
+    paddingHorizontal: 18,
+    borderRadius: BorderRadius.sm,
+    gap: 6,
   },
   actionBtnFull: {
     flex: 1,
@@ -782,7 +794,7 @@ const styles = StyleSheet.create({
   },
   actionBtnText: {
     color: '#FFFFFF',
-    fontSize: 15,
-    fontWeight: '700',
+    fontSize: 14,
+    fontWeight: '600',
   },
 });

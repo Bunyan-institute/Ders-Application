@@ -11,12 +11,12 @@ interface Props {
 }
 
 const ICON_MAP: Record<string, keyof typeof Ionicons.glyphMap> = {
-  book: 'book',
+  book: 'book-outline',
   'book-open': 'book-outline',
-  bookmark: 'bookmark',
+  bookmark: 'bookmark-outline',
   scale: 'scale-outline',
   clock: 'time-outline',
-  type: 'text-outline',
+  type: 'document-text-outline',
   mic: 'mic-outline',
   heart: 'heart-outline',
 };
@@ -39,14 +39,22 @@ export const CategoryCard = memo(({ category, onPress }: Props) => {
         },
       ]}
       onPress={() => onPress(category)}
-      activeOpacity={0.7}
+      activeOpacity={0.75}
       accessibilityLabel={displayName}
     >
-      <View style={[styles.iconContainer, { backgroundColor: category.color + '18' }]}>
+      <View
+        style={[
+          styles.iconContainer,
+          {
+            backgroundColor: colors.surfaceVariant,
+            borderColor: colors.borderLight,
+          },
+        ]}
+      >
         <Ionicons
-          name={ICON_MAP[category.icon] || 'book'}
-          size={28}
-          color={category.color}
+          name={ICON_MAP[category.icon] || 'book-outline'}
+          size={22}
+          color={colors.primary}
         />
       </View>
       <Text
@@ -62,9 +70,11 @@ export const CategoryCard = memo(({ category, onPress }: Props) => {
       >
         {displayName}
       </Text>
-      <Text style={[styles.count, { color: colors.textTertiary, fontSize: fonts.xs }]}>
-        {t.common.lessonsCount(category.courseCount)}
-      </Text>
+      <View style={styles.countRow}>
+        <Text style={[styles.count, { color: colors.textSecondary, fontSize: fonts.xs }]}>
+          {t.common.lessonsCount(category.courseCount)}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 });
@@ -72,30 +82,36 @@ export const CategoryCard = memo(({ category, onPress }: Props) => {
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    padding: Spacing.md,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.sm,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     margin: Spacing.xs,
-    minHeight: 115,
+    minHeight: 112,
     justifyContent: 'space-between',
   },
   iconContainer: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 40,
+    height: 40,
+    borderRadius: BorderRadius.sm,
+    borderWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: Spacing.xs,
   },
   name: {
-    fontWeight: '700',
+    fontWeight: '600',
     textAlign: 'center',
-    marginBottom: 2,
-    lineHeight: 16,
+    marginBottom: 4,
+    lineHeight: 18,
+  },
+  countRow: {
+    marginTop: 'auto',
+    paddingTop: Spacing.xs,
   },
   count: {
     textAlign: 'center',
-    marginTop: 'auto',
+    letterSpacing: 0.2,
   },
 });

@@ -38,7 +38,10 @@ export default function LessonScreen() {
 
   const currentIndex = courseLessons.findIndex(l => l.id === id);
   const prevLesson = currentIndex > 0 ? courseLessons[currentIndex - 1] : null;
-  const nextLesson = currentIndex >= 0 && currentIndex < courseLessons.length - 1 ? courseLessons[currentIndex + 1] : null;
+  const nextLesson =
+    currentIndex >= 0 && currentIndex < courseLessons.length - 1
+      ? courseLessons[currentIndex + 1]
+      : null;
 
   const progressMap = useLearningStore(s => s.progress);
   const bookmarks = useLearningStore(s => s.bookmarks);
@@ -49,7 +52,7 @@ export default function LessonScreen() {
   const existingProgress = progressMap[id];
   const bookmarked = bookmarks.some(b => b.lessonId === id);
 
-  // Tab mode: Default to PDF when available as requested!
+  // Tab mode: Default to PDF when available
   const hasPdf = Boolean(lesson?.pdfUrl);
   const [activeTab, setActiveTab] = useState<'pdf' | 'notes'>(hasPdf ? 'pdf' : 'notes');
 
@@ -64,11 +67,15 @@ export default function LessonScreen() {
 
   // Downloads state
   const downloadsMap = useDownloadStore(s => s.downloads);
-  const audioDownload = downloadsMap[`dl-${id}`] || Object.values(downloadsMap).find(d => d.lessonId === id && d.format !== 'pdf');
+  const audioDownload =
+    downloadsMap[`dl-${id}`] ||
+    Object.values(downloadsMap).find(d => d.lessonId === id && d.format !== 'pdf');
   const isAudioDownloaded = audioDownload?.status === 'completed';
   const isAudioDownloading = audioDownload?.status === 'downloading';
 
-  const pdfDownload = downloadsMap[`dl-${id}-pdf`] || Object.values(downloadsMap).find(d => d.lessonId === id && d.format === 'pdf');
+  const pdfDownload =
+    downloadsMap[`dl-${id}-pdf`] ||
+    Object.values(downloadsMap).find(d => d.lessonId === id && d.format === 'pdf');
   const isPdfDownloaded = pdfDownload?.status === 'completed';
   const isPdfDownloading = pdfDownload?.status === 'downloading';
 
@@ -160,8 +167,6 @@ export default function LessonScreen() {
     setSpeed(speeds[nextIdx]);
   };
 
-  const progressPercent = duration > 0 ? (currentTime / duration) * 100 : 0;
-
   if (!lesson) {
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -180,6 +185,7 @@ export default function LessonScreen() {
           headerStyle: { backgroundColor: colors.surface },
           headerTintColor: colors.text,
           headerBackTitle: t.common.back,
+          headerShadowVisible: false,
         }}
       />
 
@@ -191,29 +197,55 @@ export default function LessonScreen() {
         {/* Top Header & Breadcrumb */}
         <View style={styles.topInfo}>
           <View style={styles.courseBadgeRow}>
-            <Text style={[styles.courseBadge, { color: colors.primary, backgroundColor: colors.primary + '15' }]}>
-              {course?.title || 'Course'}
-            </Text>
+            <View
+              style={[
+                styles.courseBadgeBox,
+                {
+                  backgroundColor: colors.surfaceVariant,
+                  borderColor: colors.borderLight,
+                },
+              ]}
+            >
+              <Text style={[styles.courseBadgeText, { color: colors.primary }]}>
+                {course?.title || 'Course'}
+              </Text>
+            </View>
             <Text style={[styles.lessonOrder, { color: colors.textSecondary }]}>
               {t.lesson.orderInfo(lesson.order, courseLessons.length || course?.totalLessons || 1)}
             </Text>
           </View>
-          <Text style={[styles.lessonTitle, { color: colors.text, fontSize: fonts.xl }]}>
+          <Text
+            style={[
+              styles.lessonTitle,
+              { color: colors.text, fontSize: fonts.lg, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {lesson.title}
           </Text>
         </View>
 
         {/* Tab Switcher if PDF is present */}
         {hasPdf && (
-          <View style={[styles.tabBar, { backgroundColor: colors.surfaceVariant, borderColor: colors.border }]}>
+          <View
+            style={[
+              styles.tabBar,
+              { backgroundColor: colors.surfaceVariant, borderColor: colors.borderLight },
+            ]}
+          >
             <TouchableOpacity
-              style={[styles.tabItem, activeTab === 'pdf' && [styles.activeTabItem, { backgroundColor: colors.surface }]]}
+              style={[
+                styles.tabItem,
+                activeTab === 'pdf' && [
+                  styles.activeTabItem,
+                  { backgroundColor: colors.surface, borderColor: colors.borderLight },
+                ],
+              ]}
               onPress={() => setActiveTab('pdf')}
               activeOpacity={0.8}
             >
               <Ionicons
-                name="document-text"
-                size={16}
+                name="document-text-outline"
+                size={15}
                 color={activeTab === 'pdf' ? colors.primary : colors.textSecondary}
               />
               <Text
@@ -227,13 +259,19 @@ export default function LessonScreen() {
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[styles.tabItem, activeTab === 'notes' && [styles.activeTabItem, { backgroundColor: colors.surface }]]}
+              style={[
+                styles.tabItem,
+                activeTab === 'notes' && [
+                  styles.activeTabItem,
+                  { backgroundColor: colors.surface, borderColor: colors.borderLight },
+                ],
+              ]}
               onPress={() => setActiveTab('notes')}
               activeOpacity={0.8}
             >
               <Ionicons
                 name="information-circle-outline"
-                size={16}
+                size={15}
                 color={activeTab === 'notes' ? colors.primary : colors.textSecondary}
               />
               <Text
@@ -263,27 +301,40 @@ export default function LessonScreen() {
 
         {/* 2. OVERVIEW & TRANSCRIPT SECTION */}
         {(activeTab === 'notes' || !hasPdf) && (
-          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
             <View style={styles.cardHeader}>
-              <View style={[styles.cardIconBox, { backgroundColor: colors.primary + '15' }]}>
-                <Ionicons name="book-outline" size={20} color={colors.primary} />
+              <View
+                style={[
+                  styles.cardIconBox,
+                  { backgroundColor: colors.surfaceVariant, borderColor: colors.borderLight },
+                ]}
+              >
+                <Ionicons name="book-outline" size={16} color={colors.primary} />
               </View>
-              <Text style={[styles.cardTitle, { color: colors.text, fontSize: fonts.md }]}>
+              <Text style={[styles.cardTitle, { color: colors.text, fontSize: fonts.sm }]}>
                 {t.lesson.summaryHeader}
               </Text>
             </View>
 
-            <Text style={[styles.cardBody, { color: colors.textSecondary, fontSize: fonts.sm }]}>
+            <Text
+              style={[
+                styles.cardBody,
+                { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+              ]}
+            >
               {lesson.description}
             </Text>
 
             {hasPdf && (
               <TouchableOpacity
-                style={[styles.pdfNoticeBtn, { borderColor: colors.primary + '30', backgroundColor: colors.primary + '10' }]}
+                style={[
+                  styles.pdfNoticeBtn,
+                  { borderColor: colors.borderLight, backgroundColor: colors.surfaceVariant },
+                ]}
                 onPress={() => setActiveTab('pdf')}
-                activeOpacity={0.7}
+                activeOpacity={0.75}
               >
-                <Ionicons name="document-text-outline" size={18} color={colors.primary} />
+                <Ionicons name="document-text-outline" size={16} color={colors.primary} />
                 <Text style={[styles.pdfNoticeText, { color: colors.primary }]}>
                   {t.lesson.pdfNoticeText}
                 </Text>
@@ -291,11 +342,16 @@ export default function LessonScreen() {
             )}
 
             {lesson.transcriptText && (
-              <View style={{ marginTop: Spacing.md }}>
+              <View style={{ marginTop: Spacing.sm }}>
                 <Text style={[styles.sectionSubtitle, { color: colors.text }]}>
                   {t.lesson.studyNotesHeader}
                 </Text>
-                <Text style={[styles.transcriptText, { color: colors.textSecondary, fontSize: fonts.sm }]}>
+                <Text
+                  style={[
+                    styles.transcriptText,
+                    { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                  ]}
+                >
                   {lesson.transcriptText}
                 </Text>
               </View>
@@ -306,40 +362,88 @@ export default function LessonScreen() {
         {/* Action Buttons Row */}
         <View style={styles.actionButtonsRow}>
           <TouchableOpacity
-            style={[styles.actionBtn, { backgroundColor: isAudioDownloaded ? colors.success + '15' : colors.surface, borderColor: colors.border }]}
+            style={[
+              styles.actionBtn,
+              {
+                backgroundColor: isAudioDownloaded ? colors.surfaceVariant : colors.surface,
+                borderColor: isAudioDownloaded ? colors.primary : colors.borderLight,
+              },
+            ]}
             onPress={handleDownloadAudio}
+            activeOpacity={0.75}
           >
             <Ionicons
-              name={isAudioDownloaded ? 'checkmark-circle' : isAudioDownloading ? 'arrow-down-circle' : 'cloud-download-outline'}
-              size={18}
-              color={isAudioDownloaded ? colors.success : colors.text}
+              name={
+                isAudioDownloaded
+                  ? 'checkmark'
+                  : isAudioDownloading
+                  ? 'arrow-down'
+                  : 'cloud-download-outline'
+              }
+              size={15}
+              color={isAudioDownloaded ? colors.primary : colors.text}
             />
-            <Text style={[styles.actionBtnText, { color: isAudioDownloaded ? colors.success : colors.text }]}>
-              {isAudioDownloaded ? t.lesson.audioSaved : isAudioDownloading ? t.lesson.audioDownloading : t.lesson.downloadAudio}
+            <Text
+              style={[
+                styles.actionBtnText,
+                { color: isAudioDownloaded ? colors.primary : colors.text },
+              ]}
+            >
+              {isAudioDownloaded
+                ? t.lesson.audioSaved
+                : isAudioDownloading
+                ? t.lesson.audioDownloading
+                : t.lesson.downloadAudio}
             </Text>
           </TouchableOpacity>
 
           {hasPdf && (
             <TouchableOpacity
-              style={[styles.actionBtn, { backgroundColor: isPdfDownloaded ? colors.success + '15' : colors.surface, borderColor: colors.border }]}
+              style={[
+                styles.actionBtn,
+                {
+                  backgroundColor: isPdfDownloaded ? colors.surfaceVariant : colors.surface,
+                  borderColor: isPdfDownloaded ? colors.primary : colors.borderLight,
+                },
+              ]}
               onPress={handleDownloadPdf}
+              activeOpacity={0.75}
             >
               <Ionicons
-                name={isPdfDownloaded ? 'checkmark-circle' : isPdfDownloading ? 'arrow-down-circle' : 'document-text-outline'}
-                size={18}
-                color={isPdfDownloaded ? colors.success : colors.text}
+                name={
+                  isPdfDownloaded
+                    ? 'checkmark'
+                    : isPdfDownloading
+                    ? 'arrow-down'
+                    : 'document-text-outline'
+                }
+                size={15}
+                color={isPdfDownloaded ? colors.primary : colors.text}
               />
-              <Text style={[styles.actionBtnText, { color: isPdfDownloaded ? colors.success : colors.text }]}>
-                {isPdfDownloaded ? t.lesson.pdfSaved : isPdfDownloading ? t.lesson.pdfDownloading : t.lesson.downloadPdf}
+              <Text
+                style={[
+                  styles.actionBtnText,
+                  { color: isPdfDownloaded ? colors.primary : colors.text },
+                ]}
+              >
+                {isPdfDownloaded
+                  ? t.lesson.pdfSaved
+                  : isPdfDownloading
+                  ? t.lesson.pdfDownloading
+                  : t.lesson.downloadPdf}
               </Text>
             </TouchableOpacity>
           )}
 
           <TouchableOpacity
-            style={[styles.actionBtn, { backgroundColor: colors.surface, borderColor: colors.border }]}
+            style={[
+              styles.actionBtn,
+              { backgroundColor: colors.surface, borderColor: colors.borderLight },
+            ]}
             onPress={handleShare}
+            activeOpacity={0.75}
           >
-            <Ionicons name="share-outline" size={18} color={colors.text} />
+            <Ionicons name="share-outline" size={15} color={colors.text} />
             <Text style={[styles.actionBtnText, { color: colors.text }]}>{t.common.share}</Text>
           </TouchableOpacity>
         </View>
@@ -348,10 +452,18 @@ export default function LessonScreen() {
         <View style={styles.navRow}>
           {prevLesson ? (
             <TouchableOpacity
-              style={[styles.navBtn, { borderColor: colors.border, backgroundColor: colors.surface }]}
+              style={[
+                styles.navBtn,
+                { borderColor: colors.borderLight, backgroundColor: colors.surface },
+              ]}
               onPress={() => router.replace(`/lesson/${prevLesson.id}`)}
+              activeOpacity={0.75}
             >
-              <Ionicons name="chevron-back" size={18} color={colors.text} />
+              <Ionicons
+                name={isRTL ? 'chevron-forward' : 'chevron-back'}
+                size={15}
+                color={colors.text}
+              />
               <Text style={[styles.navBtnText, { color: colors.text }]} numberOfLines={1}>
                 {t.lesson.prevLesson(prevLesson.order)}
               </Text>
@@ -362,18 +474,26 @@ export default function LessonScreen() {
 
           {nextLesson && (
             <TouchableOpacity
-              style={[styles.navBtn, { borderColor: colors.border, backgroundColor: colors.surface }]}
+              style={[
+                styles.navBtn,
+                { borderColor: colors.borderLight, backgroundColor: colors.surface },
+              ]}
               onPress={() => router.replace(`/lesson/${nextLesson.id}`)}
+              activeOpacity={0.75}
             >
               <Text style={[styles.navBtnText, { color: colors.text }]} numberOfLines={1}>
                 {t.lesson.nextLesson(nextLesson.order)}
               </Text>
-              <Ionicons name="chevron-forward" size={18} color={colors.text} />
+              <Ionicons
+                name={isRTL ? 'chevron-back' : 'chevron-forward'}
+                size={15}
+                color={colors.text}
+              />
             </TouchableOpacity>
           )}
         </View>
 
-        {/* Bottom padding so content is not hidden by sticky audio player */}
+        {/* Bottom spacer for sticky player */}
         <View style={{ height: 160 }} />
       </ScrollView>
 
@@ -383,8 +503,7 @@ export default function LessonScreen() {
           styles.bottomPlayer,
           {
             backgroundColor: colors.surface,
-            borderTopColor: colors.border,
-            shadowColor: '#000',
+            borderTopColor: colors.borderLight,
           },
         ]}
       >
@@ -421,13 +540,23 @@ export default function LessonScreen() {
           {/* Controls Row */}
           <View style={styles.playerControlsRow}>
             {/* Speed Button */}
-            <TouchableOpacity style={[styles.speedChip, { backgroundColor: colors.surfaceVariant }]} onPress={cycleSpeed}>
+            <TouchableOpacity
+              style={[
+                styles.speedChip,
+                {
+                  backgroundColor: colors.surfaceVariant,
+                  borderColor: colors.borderLight,
+                },
+              ]}
+              onPress={cycleSpeed}
+              activeOpacity={0.75}
+            >
               <Text style={[styles.speedChipText, { color: colors.text }]}>{speed}x</Text>
             </TouchableOpacity>
 
             {/* Seek -10s */}
-            <TouchableOpacity style={styles.seekBtn} onPress={() => seekBy(-10)} activeOpacity={0.7}>
-              <Ionicons name="play-back" size={26} color={colors.text} />
+            <TouchableOpacity style={styles.seekBtn} onPress={() => seekBy(-10)} activeOpacity={0.75}>
+              <Ionicons name="play-back-outline" size={22} color={colors.text} />
               <Text style={[styles.seekSubText, { color: colors.textSecondary }]}>-10s</Text>
             </TouchableOpacity>
 
@@ -438,12 +567,12 @@ export default function LessonScreen() {
               activeOpacity={0.85}
               accessibilityLabel={isPlaying ? 'Pause lesson audio' : 'Play lesson audio'}
             >
-              <Ionicons name={isPlaying ? 'pause' : 'play'} size={32} color="#FFFFFF" />
+              <Ionicons name={isPlaying ? 'pause' : 'play'} size={24} color="#FFFFFF" />
             </TouchableOpacity>
 
             {/* Seek +10s */}
-            <TouchableOpacity style={styles.seekBtn} onPress={() => seekBy(10)} activeOpacity={0.7}>
-              <Ionicons name="play-forward" size={26} color={colors.text} />
+            <TouchableOpacity style={styles.seekBtn} onPress={() => seekBy(10)} activeOpacity={0.75}>
+              <Ionicons name="play-forward-outline" size={22} color={colors.text} />
               <Text style={[styles.seekSubText, { color: colors.textSecondary }]}>+10s</Text>
             </TouchableOpacity>
 
@@ -451,12 +580,12 @@ export default function LessonScreen() {
             <TouchableOpacity
               style={styles.utilBtn}
               onPress={() => toggleBookmark(id, lesson.courseId)}
-              activeOpacity={0.7}
+              activeOpacity={0.75}
             >
               <Ionicons
                 name={bookmarked ? 'bookmark' : 'bookmark-outline'}
-                size={22}
-                color={bookmarked ? colors.accent : colors.text}
+                size={20}
+                color={bookmarked ? colors.accent : colors.icon}
               />
             </TouchableOpacity>
           </View>
@@ -486,26 +615,29 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 6,
   },
-  courseBadge: {
-    fontSize: 12,
-    fontWeight: '700',
+  courseBadgeBox: {
     paddingVertical: 3,
     paddingHorizontal: 8,
-    borderRadius: BorderRadius.sm,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  courseBadgeText: {
+    fontSize: 11,
+    fontWeight: '600',
   },
   lessonOrder: {
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   lessonTitle: {
-    fontWeight: '800',
-    lineHeight: 28,
+    fontWeight: '700',
+    lineHeight: 26,
   },
   tabBar: {
     flexDirection: 'row',
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    padding: 3,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
+    padding: 2,
     marginBottom: Spacing.md,
   },
   tabItem: {
@@ -513,27 +645,23 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 8,
-    borderRadius: BorderRadius.sm,
+    paddingVertical: 7,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'transparent',
     gap: 6,
   },
-  activeTabItem: {
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.1,
-    shadowRadius: 2,
-    elevation: 1,
-  },
+  activeTabItem: {},
   tabText: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 12,
+    fontWeight: '600',
   },
   card: {
-    padding: Spacing.lg,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    marginBottom: Spacing.lg,
-    gap: Spacing.sm,
+    padding: Spacing.md,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginBottom: Spacing.md,
+    gap: Spacing.xs,
   },
   cardHeader: {
     flexDirection: 'row',
@@ -542,36 +670,37 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   cardIconBox: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
+    width: 28,
+    height: 28,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
   },
   cardTitle: {
-    fontWeight: '700',
+    fontWeight: '600',
   },
   cardBody: {
-    lineHeight: 21,
+    lineHeight: 20,
   },
   pdfNoticeBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    padding: Spacing.md,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
+    padding: Spacing.sm,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 8,
     marginTop: 6,
   },
   pdfNoticeText: {
     flex: 1,
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '500',
     lineHeight: 18,
   },
   sectionSubtitle: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 12,
+    fontWeight: '600',
     marginBottom: 4,
   },
   transcriptText: {
@@ -580,76 +709,55 @@ const styles = StyleSheet.create({
   actionButtonsRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 10,
-    marginBottom: Spacing.lg,
+    gap: 8,
+    marginBottom: Spacing.md,
   },
   actionBtn: {
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 10,
-    paddingHorizontal: 14,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 6,
   },
   actionBtnText: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 12,
+    fontWeight: '600',
   },
   navRow: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    gap: 12,
+    gap: 10,
     marginBottom: Spacing.lg,
   },
   navBtn: {
     flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 14,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 6,
   },
   navBtnText: {
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '500',
   },
   bottomPlayer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    borderTopWidth: 1,
-    shadowOffset: { width: 0, height: -3 },
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
-    elevation: 8,
-    paddingBottom: Platform.OS === 'ios' ? 24 : 12,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    paddingBottom: Platform.OS === 'ios' ? 24 : 10,
   },
   scrubberContainer: {
     width: '100%',
-    paddingVertical: 6,
+    paddingVertical: 2,
     paddingHorizontal: Spacing.lg,
-  },
-  scrubberTrack: {
-    height: 4,
-    borderRadius: 2,
-    position: 'relative',
-  },
-  scrubberFill: {
-    height: '100%',
-    borderRadius: 2,
-  },
-  scrubberKnob: {
-    position: 'absolute',
-    top: -4,
-    width: 12,
-    height: 12,
-    borderRadius: 6,
-    marginLeft: -6,
   },
   playerInner: {
     maxWidth: 880,
@@ -661,15 +769,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    marginBottom: 8,
+    marginBottom: 6,
   },
   playerTitleGroup: {
     flex: 1,
     marginRight: 12,
   },
   miniLessonTitle: {
-    fontSize: 13,
-    fontWeight: '700',
+    fontSize: 12,
+    fontWeight: '600',
   },
   streamingBadgeRow: {
     flexDirection: 'row',
@@ -678,17 +786,17 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   liveDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    width: 5,
+    height: 5,
+    borderRadius: 2.5,
   },
   miniSourceText: {
-    fontSize: 11,
-    fontWeight: '600',
+    fontSize: 10,
+    fontWeight: '500',
   },
   timeDisplay: {
-    fontSize: 12,
-    fontWeight: '700',
+    fontSize: 11,
+    fontWeight: '500',
     fontVariant: ['tabular-nums'],
   },
   playerControlsRow: {
@@ -697,39 +805,35 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   speedChip: {
-    paddingVertical: 6,
-    paddingHorizontal: 10,
-    borderRadius: BorderRadius.full,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   speedChipText: {
-    fontSize: 12,
-    fontWeight: '700',
+    fontSize: 11,
+    fontWeight: '600',
   },
   seekBtn: {
     alignItems: 'center',
-    paddingHorizontal: 8,
+    paddingHorizontal: 6,
   },
   seekSubText: {
-    fontSize: 10,
-    fontWeight: '700',
+    fontSize: 9,
+    fontWeight: '600',
     marginTop: -2,
   },
   playPauseBtn: {
-    width: 52,
-    height: 52,
-    borderRadius: 26,
+    width: 44,
+    height: 44,
+    borderRadius: BorderRadius.sm,
     justifyContent: 'center',
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 4,
-    elevation: 3,
   },
   utilBtn: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 32,
+    height: 32,
+    borderRadius: BorderRadius.xs,
     justifyContent: 'center',
     alignItems: 'center',
   },

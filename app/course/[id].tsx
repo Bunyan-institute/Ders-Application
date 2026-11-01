@@ -63,7 +63,10 @@ export default function CourseScreen() {
           text: t.common.download,
           onPress: () => {
             DownloadService.downloadCourse(downloadableLessons);
-            Alert.alert(t.course.downloadsStartedTitle, t.course.downloadsStartedMsg(downloadableLessons.length));
+            Alert.alert(
+              t.course.downloadsStartedTitle,
+              t.course.downloadsStartedMsg(downloadableLessons.length)
+            );
           },
         },
       ]
@@ -73,7 +76,11 @@ export default function CourseScreen() {
   if (!course) {
     return (
       <View style={[styles.container, { backgroundColor: colors.background }]}>
-        <EmptyState icon="alert-circle-outline" title={t.course.notFoundTitle} subtitle={t.course.notFoundDesc} />
+        <EmptyState
+          icon="alert-circle-outline"
+          title={t.course.notFoundTitle}
+          subtitle={t.course.notFoundDesc}
+        />
       </View>
     );
   }
@@ -85,6 +92,8 @@ export default function CourseScreen() {
           headerTitle: course.title,
           headerStyle: { backgroundColor: colors.surface },
           headerTintColor: colors.text,
+          headerBackTitle: t.common.back,
+          headerShadowVisible: false,
         }}
       />
 
@@ -96,7 +105,9 @@ export default function CourseScreen() {
             index={index + 1}
             progress={progress[item.id]}
             isBookmarked={bookmarks.some(b => b.lessonId === item.id)}
-            isDownloaded={Object.values(downloads).some(d => d.lessonId === item.id && d.status === 'completed')}
+            isDownloaded={Object.values(downloads).some(
+              d => d.lessonId === item.id && d.status === 'completed'
+            )}
             onPress={handleLessonPress}
             onBookmark={handleBookmark}
           />
@@ -111,29 +122,55 @@ export default function CourseScreen() {
                 coverUrl={course.coverUrl || course.thumbnailUrl}
                 arabicTitle={course.title}
                 author={course.instructor}
-                width={110}
-                height={150}
+                width={104}
+                height={144}
                 variant="detail"
               />
               <View style={styles.heroInfo}>
-                <Text style={[styles.courseTitle, { color: colors.text, fontSize: fonts.xxl }]}>
+                <Text
+                  style={[
+                    styles.courseTitle,
+                    { color: colors.text, fontSize: fonts.xl, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                  ]}
+                >
                   {course.title}
                 </Text>
                 <View style={styles.authorBadgeRow}>
-                  <Ionicons name="person" size={13} color={colors.primary} />
-                  <Text style={[styles.instructorText, { color: colors.primary, fontSize: fonts.sm }]}>
+                  <Ionicons name="ribbon-outline" size={14} color={colors.accent} />
+                  <Text
+                    style={[
+                      styles.instructorText,
+                      { color: colors.primary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                    ]}
+                  >
                     {course.instructor}
                   </Text>
                 </View>
                 <View style={styles.metaRow}>
-                  <View style={[styles.metaBadge, { backgroundColor: colors.surfaceVariant }]}>
-                    <Ionicons name="school-outline" size={13} color={colors.textSecondary} />
+                  <View
+                    style={[
+                      styles.metaBadge,
+                      {
+                        backgroundColor: colors.surfaceVariant,
+                        borderColor: colors.borderLight,
+                      },
+                    ]}
+                  >
+                    <Ionicons name="school-outline" size={12} color={colors.textSecondary} />
                     <Text style={[styles.metaText, { color: colors.textSecondary, fontSize: fonts.xs }]}>
                       {t.course.level[course.level as keyof typeof t.course.level] || course.level}
                     </Text>
                   </View>
-                  <View style={[styles.metaBadge, { backgroundColor: colors.surfaceVariant }]}>
-                    <Ionicons name="play-circle-outline" size={13} color={colors.textSecondary} />
+                  <View
+                    style={[
+                      styles.metaBadge,
+                      {
+                        backgroundColor: colors.surfaceVariant,
+                        borderColor: colors.borderLight,
+                      },
+                    ]}
+                  >
+                    <Ionicons name="mic-outline" size={12} color={colors.textSecondary} />
                     <Text style={[styles.metaText, { color: colors.textSecondary, fontSize: fonts.xs }]}>
                       {t.common.lessonsCount(course.totalLessons)}
                     </Text>
@@ -142,7 +179,12 @@ export default function CourseScreen() {
               </View>
             </View>
 
-            <Text style={[styles.courseDesc, { color: colors.textSecondary, fontSize: fonts.md }]}>
+            <Text
+              style={[
+                styles.courseDesc,
+                { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+              ]}
+            >
               {course.description}
             </Text>
 
@@ -158,25 +200,45 @@ export default function CourseScreen() {
                 onPress={handleDownloadAll}
                 activeOpacity={0.8}
               >
-                <Ionicons name="cloud-download-outline" size={20} color="#fff" />
+                <Ionicons name="cloud-download-outline" size={17} color="#FFFFFF" />
                 <Text style={styles.downloadAllText}>{t.course.downloadAll}</Text>
               </TouchableOpacity>
             ) : (
-              <View style={[styles.prepNoticeBox, { backgroundColor: colors.primaryLight + '12', borderColor: colors.primaryLight + '30' }]}>
-                <Ionicons name="information-circle-outline" size={18} color={colors.primary} />
-                <Text style={[styles.prepNoticeText, { color: colors.text }]}>
+              <View
+                style={[
+                  styles.prepNoticeBox,
+                  {
+                    backgroundColor: colors.surfaceVariant,
+                    borderColor: colors.borderLight,
+                  },
+                ]}
+              >
+                <Ionicons name="information-circle-outline" size={16} color={colors.accent} />
+                <Text style={[styles.prepNoticeText, { color: colors.textSecondary }]}>
                   {t.course.prepNotice}
                 </Text>
               </View>
             )}
 
-            <Text style={[styles.lessonsHeader, { color: colors.text, fontSize: fonts.lg }]}>
-              {t.course.lessonsHeader}
-            </Text>
+            <View style={styles.lessonsHeaderRow}>
+              <View style={[styles.sectionBullet, { backgroundColor: colors.primary }]} />
+              <Text
+                style={[
+                  styles.lessonsHeader,
+                  { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
+                {t.course.lessonsHeader}
+              </Text>
+            </View>
           </View>
         }
         ListEmptyComponent={
-          <EmptyState icon="list-outline" title={t.course.noLessonsTitle} subtitle={t.course.noLessonsDesc} />
+          <EmptyState
+            icon="list-outline"
+            title={t.course.noLessonsTitle}
+            subtitle={t.course.noLessonsDesc}
+          />
         }
       />
     </View>
@@ -184,17 +246,21 @@ export default function CourseScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: {
+    flex: 1,
+  },
   list: {
     maxWidth: 840,
     width: '100%',
     alignSelf: 'center',
     padding: Spacing.lg,
   },
-  headerSection: { marginBottom: Spacing.lg },
+  headerSection: {
+    marginBottom: Spacing.md,
+  },
   heroRow: {
     flexDirection: 'row',
-    gap: Spacing.lg,
+    gap: Spacing.md,
     alignItems: 'center',
     marginBottom: Spacing.md,
   },
@@ -203,54 +269,65 @@ const styles = StyleSheet.create({
     gap: 6,
   },
   courseTitle: {
-    fontWeight: '800',
+    fontWeight: '700',
     writingDirection: 'rtl',
-    lineHeight: 28,
+    lineHeight: 26,
   },
   authorBadgeRow: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 4,
+    gap: 5,
   },
   instructorText: {
     fontWeight: '600',
     writingDirection: 'rtl',
   },
   courseDesc: {
-    lineHeight: 22,
-    marginBottom: Spacing.lg,
+    lineHeight: 20,
+    marginBottom: Spacing.md,
     writingDirection: 'rtl',
     textAlign: 'left',
   },
-  metaRow: { flexDirection: 'row', gap: Spacing.sm, marginTop: 2 },
+  metaRow: {
+    flexDirection: 'row',
+    gap: Spacing.xs,
+    marginTop: 2,
+  },
   metaBadge: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
-    paddingHorizontal: Spacing.md,
-    paddingVertical: 5,
-    borderRadius: BorderRadius.sm,
+    paddingHorizontal: Spacing.sm,
+    paddingVertical: 3,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
   },
-  metaText: { fontWeight: '600' },
+  metaText: {
+    fontWeight: '500',
+  },
   downloadAllBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 13,
-    borderRadius: BorderRadius.lg,
-    gap: 8,
-    marginBottom: Spacing.xl,
+    paddingVertical: 10,
+    borderRadius: BorderRadius.xs,
+    gap: 6,
+    marginBottom: Spacing.lg,
     marginTop: Spacing.sm,
   },
-  downloadAllText: { color: '#fff', fontWeight: '700', fontSize: 15 },
+  downloadAllText: {
+    color: '#FFFFFF',
+    fontWeight: '600',
+    fontSize: 13,
+  },
   prepNoticeBox: {
     flexDirection: 'row',
     alignItems: 'center',
     padding: Spacing.md,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 8,
-    marginBottom: Spacing.lg,
+    marginBottom: Spacing.md,
     marginTop: Spacing.sm,
   },
   prepNoticeText: {
@@ -259,9 +336,20 @@ const styles = StyleSheet.create({
     lineHeight: 18,
     writingDirection: 'rtl',
   },
+  lessonsHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: Spacing.xs,
+    marginTop: Spacing.xs,
+  },
+  sectionBullet: {
+    width: 4,
+    height: 14,
+    borderRadius: 2,
+  },
   lessonsHeader: {
-    fontWeight: '800',
-    marginBottom: Spacing.sm,
+    fontWeight: '600',
     writingDirection: 'rtl',
     textAlign: 'left',
   },

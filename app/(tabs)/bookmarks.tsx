@@ -36,10 +36,20 @@ export default function BookmarksScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.text, fontSize: fonts.xxl, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+        <Text
+          style={[
+            styles.title,
+            { color: colors.text, fontSize: fonts.xl, writingDirection: isRTL ? 'rtl' : 'ltr' },
+          ]}
+        >
           {t.bookmarks.title}
         </Text>
-        <Text style={[styles.count, { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+        <Text
+          style={[
+            styles.count,
+            { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+          ]}
+        >
           {t.bookmarks.savedCount(bookmarkedLessons.length)}
         </Text>
       </View>
@@ -52,7 +62,9 @@ export default function BookmarksScreen() {
             index={index + 1}
             progress={progress[item.id]}
             isBookmarked={true}
-            isDownloaded={Object.values(downloads).some(d => d.lessonId === item.id && d.status === 'completed')}
+            isDownloaded={Object.values(downloads).some(
+              d => d.lessonId === item.id && d.status === 'completed'
+            )}
             onPress={handlePress}
             onBookmark={handleBookmark}
           />
@@ -83,7 +95,17 @@ const styles = StyleSheet.create({
     paddingTop: Spacing.lg,
     paddingBottom: Spacing.md,
   },
-  title: { fontWeight: '800' },
-  count: { marginTop: 2 },
-  list: { paddingHorizontal: Spacing.lg, flexGrow: 1, paddingBottom: Spacing.xl },
+  title: {
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  count: {
+    marginTop: 2,
+    fontWeight: '500',
+  },
+  list: {
+    paddingHorizontal: Spacing.lg,
+    flexGrow: 1,
+    paddingBottom: Spacing.xl,
+  },
 });

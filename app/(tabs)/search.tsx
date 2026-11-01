@@ -25,17 +25,17 @@ const MULTILINGUAL_SEARCH_MAP: Record<string, string[]> = {
   'crs-2': [
     'usool', 'usul', 'thalatha', 'three principles', 'aqeedah', 'fundamentals',
     'ኡሱል', 'ሰላሰቱል ኡሱል', 'ሶስቱ መሰረቶች', 'አቂዳ',
-    'usuula', 'bu\'uura sadan', 'salaasatul usuul', 'aqiidaa',
+    'usuula', "bu'uura sadan", 'salaasatul usuul', 'aqiidaa',
   ],
   'crs-3': [
     'qawaid', 'four principles', 'four rules', 'qawaid arbaa', 'aqeedah',
     'ቀዋዒድ', 'አልቀዋዒዱል አርበዓ', 'አራቱ ህጎች', 'መርሆዎች', 'አቂዳ',
-    'qawaa\'ida', 'qajeelfama afuran', 'qawaa\'idul arba\'aa',
+    "qawaa'ida", 'qajeelfama afuran', "qawaa'idul arba'aa",
   ],
   'crs-4': [
     'hadith', 'nawawi', '40 hadith', 'forty hadith', 'arbaeen', 'arbaun',
     'ሐዲስ', 'ነወዊ', 'አርበዒን', 'አርባ ሐዲሶች', 'አርባኢን',
-    'hadiisa', 'nawawii', 'arba\'iin', 'hadiisa 40',
+    'hadiisa', 'nawawii', "arba'iin", 'hadiisa 40',
   ],
   'crs-5': [
     'shuroot', 'conditions of prayer', 'salah', 'pillars of prayer', 'fiqh', 'prayer obligations',
@@ -129,7 +129,7 @@ export default function SearchScreen() {
           title: l.title,
           subtitle: l.type === 'audio' ? t.search.lessonAudioBadge : t.search.lessonPdfBadge,
           type: 'lesson',
-          icon: l.type === 'audio' ? 'musical-notes-outline' : 'document-text-outline',
+          icon: l.type === 'audio' ? 'mic-outline' : 'document-text-outline',
         });
       }
     });
@@ -146,15 +146,31 @@ export default function SearchScreen() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.text, fontSize: fonts.xxl, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+        <Text
+          style={[
+            styles.title,
+            { color: colors.text, fontSize: fonts.xl, writingDirection: isRTL ? 'rtl' : 'ltr' },
+          ]}
+        >
           {t.search.title}
         </Text>
       </View>
 
-      <View style={[styles.searchBar, { backgroundColor: colors.surfaceVariant, borderColor: colors.border }]}>
-        <Ionicons name="search" size={20} color={colors.icon} />
+      <View
+        style={[
+          styles.searchBar,
+          {
+            backgroundColor: colors.surface,
+            borderColor: colors.borderLight,
+          },
+        ]}
+      >
+        <Ionicons name="search-outline" size={18} color={colors.icon} />
         <TextInput
-          style={[styles.input, { color: colors.text, fontSize: fonts.md, textAlign: isRTL ? 'right' : 'left' }]}
+          style={[
+            styles.input,
+            { color: colors.text, fontSize: fonts.md, textAlign: isRTL ? 'right' : 'left' },
+          ]}
           placeholder={t.search.inputPlaceholder}
           placeholderTextColor={colors.textTertiary}
           value={query}
@@ -163,7 +179,7 @@ export default function SearchScreen() {
         />
         {query.length > 0 && (
           <TouchableOpacity onPress={() => setQuery('')}>
-            <Ionicons name="close-circle" size={20} color={colors.icon} />
+            <Ionicons name="close-circle" size={18} color={colors.textTertiary} />
           </TouchableOpacity>
         )}
       </View>
@@ -172,25 +188,46 @@ export default function SearchScreen() {
         data={results}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={[styles.resultRow, { borderColor: colors.border }]}
+            style={[styles.resultRow, { borderColor: colors.borderLight }]}
             onPress={() => handlePress(item)}
-            activeOpacity={0.7}
+            activeOpacity={0.75}
           >
-            <View style={[styles.resultIcon, { backgroundColor: colors.surfaceVariant }]}>
-              <Ionicons name={item.icon as any} size={20} color={colors.primary} />
+            <View
+              style={[
+                styles.resultIcon,
+                {
+                  backgroundColor: colors.surfaceVariant,
+                  borderColor: colors.borderLight,
+                },
+              ]}
+            >
+              <Ionicons name={item.icon as any} size={18} color={colors.primary} />
             </View>
             <View style={styles.resultInfo}>
               <Text
-                style={[styles.resultTitle, { color: colors.text, fontSize: fonts.md }]}
+                style={[
+                  styles.resultTitle,
+                  { color: colors.text, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
                 numberOfLines={1}
               >
                 {item.title}
               </Text>
-              <Text style={[styles.resultSubtitle, { color: colors.textSecondary, fontSize: fonts.xs }]} numberOfLines={1}>
+              <Text
+                style={[
+                  styles.resultSubtitle,
+                  { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+                numberOfLines={1}
+              >
                 {item.subtitle}
               </Text>
             </View>
-            <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={18} color={colors.textTertiary} />
+            <Ionicons
+              name={isRTL ? 'chevron-back' : 'chevron-forward'}
+              size={16}
+              color={colors.textTertiary}
+            />
           </TouchableOpacity>
         )}
         keyExtractor={item => `${item.type}-${item.id}`}
@@ -204,7 +241,7 @@ export default function SearchScreen() {
             />
           ) : (
             <EmptyState
-              icon="search"
+              icon="search-outline"
               title={t.search.emptyQueryTitle}
               subtitle={t.search.emptyQuerySubtitle}
             />
@@ -222,36 +259,58 @@ const styles = StyleSheet.create({
     width: '100%',
     alignSelf: 'center',
   },
-  header: { paddingHorizontal: Spacing.lg, paddingTop: Spacing.lg, paddingBottom: Spacing.sm },
-  title: { fontWeight: '800' },
+  header: {
+    paddingHorizontal: Spacing.lg,
+    paddingTop: Spacing.lg,
+    paddingBottom: Spacing.sm,
+  },
+  title: {
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
     marginHorizontal: Spacing.lg,
     paddingHorizontal: Spacing.md,
-    paddingVertical: 10,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
+    paddingVertical: 9,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: 8,
     marginBottom: Spacing.md,
   },
-  input: { flex: 1 },
-  list: { paddingHorizontal: Spacing.lg, flexGrow: 1, paddingBottom: Spacing.xl },
+  input: {
+    flex: 1,
+  },
+  list: {
+    paddingHorizontal: Spacing.lg,
+    flexGrow: 1,
+    paddingBottom: Spacing.xl,
+  },
   resultRow: {
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: Spacing.md,
-    borderBottomWidth: 0.5,
+    borderBottomWidth: StyleSheet.hairlineWidth,
     gap: Spacing.md,
   },
   resultIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  resultInfo: { flex: 1 },
-  resultTitle: { fontWeight: '700', textAlign: 'left', marginBottom: 2 },
-  resultSubtitle: { textAlign: 'left' },
+  resultInfo: {
+    flex: 1,
+  },
+  resultTitle: {
+    fontWeight: '600',
+    textAlign: 'left',
+    marginBottom: 2,
+  },
+  resultSubtitle: {
+    textAlign: 'left',
+  },
 });

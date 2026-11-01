@@ -104,19 +104,29 @@ export default function SettingsScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <ScrollView contentContainerStyle={styles.scrollContent} showsVerticalScrollIndicator={false}>
         <View style={styles.header}>
-          <Text style={[styles.title, { color: colors.text, fontSize: fonts.xxl, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <Text
+            style={[
+              styles.title,
+              { color: colors.text, fontSize: fonts.xl, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {t.settings.title}
           </Text>
         </View>
 
         {/* Language Selection */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <Text
+            style={[
+              styles.sectionTitle,
+              { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {t.settings.language}
           </Text>
-          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
             <View style={styles.languageGrid}>
               {languagesList.map(item => {
                 const isSelected = language === item.value;
@@ -127,22 +137,22 @@ export default function SettingsScreen() {
                       styles.languageChip,
                       {
                         backgroundColor: isSelected ? colors.primary : colors.surfaceVariant,
-                        borderColor: isSelected ? colors.primary : colors.border,
+                        borderColor: isSelected ? colors.primary : colors.borderLight,
                       },
                     ]}
                     onPress={() => setLanguage(item.value)}
-                    activeOpacity={0.7}
+                    activeOpacity={0.75}
                   >
                     <Ionicons
-                      name={isSelected ? 'checkmark-circle' : 'globe-outline'}
-                      size={16}
-                      color={isSelected ? '#fff' : colors.textSecondary}
+                      name={isSelected ? 'checkmark' : 'globe-outline'}
+                      size={15}
+                      color={isSelected ? '#FFFFFF' : colors.textSecondary}
                     />
                     <Text
                       style={[
                         styles.chipText,
                         {
-                          color: isSelected ? '#fff' : colors.text,
+                          color: isSelected ? '#FFFFFF' : colors.text,
                           fontSize: fonts.sm,
                         },
                       ]}
@@ -158,78 +168,113 @@ export default function SettingsScreen() {
 
         {/* Theme */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <Text
+            style={[
+              styles.sectionTitle,
+              { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {t.settings.appearance}
           </Text>
-          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-            <Text style={[styles.label, { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
+            <Text
+              style={[
+                styles.label,
+                { color: colors.text, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+              ]}
+            >
               {t.settings.theme}
             </Text>
             <View style={styles.optionRow}>
-              {themes.map(item => (
-                <TouchableOpacity
-                  key={item.value}
-                  style={[
-                    styles.chip,
-                    {
-                      backgroundColor: theme === item.value ? colors.primary : colors.surfaceVariant,
-                    },
-                  ]}
-                  onPress={() => setTheme(item.value)}
-                >
-                  <Text
+              {themes.map(item => {
+                const isSelected = theme === item.value;
+                return (
+                  <TouchableOpacity
+                    key={item.value}
                     style={[
-                      styles.chipText,
+                      styles.chip,
                       {
-                        color: theme === item.value ? '#fff' : colors.text,
-                        fontSize: fonts.sm,
+                        backgroundColor: isSelected ? colors.primary : colors.surfaceVariant,
+                        borderColor: isSelected ? colors.primary : colors.borderLight,
                       },
                     ]}
+                    onPress={() => setTheme(item.value)}
+                    activeOpacity={0.75}
                   >
-                    {item.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+                    <Text
+                      style={[
+                        styles.chipText,
+                        {
+                          color: isSelected ? '#FFFFFF' : colors.text,
+                          fontSize: fonts.xs,
+                        },
+                      ]}
+                    >
+                      {item.label}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
           </View>
         </View>
 
         {/* Text Size */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <Text
+            style={[
+              styles.sectionTitle,
+              { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {t.settings.textSize}
           </Text>
-          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-            <Text style={[styles.label, { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
+            <Text
+              style={[
+                styles.label,
+                { color: colors.text, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+              ]}
+            >
               {t.settings.textSize}
             </Text>
             <View style={styles.optionRow}>
-              {textSizes.map(item => (
-                <TouchableOpacity
-                  key={item.value}
-                  style={[
-                    styles.chip,
-                    {
-                      backgroundColor: textSize === item.value ? colors.primary : colors.surfaceVariant,
-                    },
-                  ]}
-                  onPress={() => setTextSize(item.value)}
-                >
-                  <Text
+              {textSizes.map(item => {
+                const isSelected = textSize === item.value;
+                return (
+                  <TouchableOpacity
+                    key={item.value}
                     style={[
-                      styles.chipText,
+                      styles.chip,
                       {
-                        color: textSize === item.value ? '#fff' : colors.text,
-                        fontSize: fonts.sm,
+                        backgroundColor: isSelected ? colors.primary : colors.surfaceVariant,
+                        borderColor: isSelected ? colors.primary : colors.borderLight,
                       },
                     ]}
+                    onPress={() => setTextSize(item.value)}
+                    activeOpacity={0.75}
                   >
-                    {item.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
+                    <Text
+                      style={[
+                        styles.chipText,
+                        {
+                          color: isSelected ? '#FFFFFF' : colors.text,
+                          fontSize: fonts.xs,
+                        },
+                      ]}
+                    >
+                      {item.label}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
             </View>
-            <Text style={[styles.previewText, { color: colors.textSecondary, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+            <Text
+              style={[
+                styles.previewText,
+                { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+              ]}
+            >
               {t.settings.previewText}
             </Text>
           </View>
@@ -237,111 +282,191 @@ export default function SettingsScreen() {
 
         {/* Storage & Cache Management */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <Text
+            style={[
+              styles.sectionTitle,
+              { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {t.settings.storage}
           </Text>
-          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
             <View style={styles.aboutRow}>
-              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.sm }]}>{t.settings.audioStorage}</Text>
-              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.sm }]}>
+              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.xs }]}>
+                {t.settings.audioStorage}
+              </Text>
+              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.xs }]}>
                 {formatBytes(storageBreakdown.audioBytes)}
               </Text>
             </View>
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={[styles.divider, { backgroundColor: colors.borderLight }]} />
             <View style={styles.aboutRow}>
-              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.sm }]}>{t.settings.pdfStorage}</Text>
-              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.sm }]}>
+              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.xs }]}>
+                {t.settings.pdfStorage}
+              </Text>
+              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.xs }]}>
                 {formatBytes(storageBreakdown.pdfBytes)}
               </Text>
             </View>
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={[styles.divider, { backgroundColor: colors.borderLight }]} />
             <View style={styles.aboutRow}>
-              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.sm, fontWeight: '700' }]}>{t.settings.totalStorage}</Text>
-              <Text style={[styles.aboutValue, { color: colors.primary, fontSize: fonts.sm, fontWeight: '700' }]}>
+              <Text
+                style={[
+                  styles.aboutLabel,
+                  { color: colors.textSecondary, fontSize: fonts.xs, fontWeight: '600' },
+                ]}
+              >
+                {t.settings.totalStorage}
+              </Text>
+              <Text
+                style={[
+                  styles.aboutValue,
+                  { color: colors.primary, fontSize: fonts.xs, fontWeight: '600' },
+                ]}
+              >
                 {formatBytes(storageBreakdown.totalBytes)} ({storageBreakdown.completedCount})
               </Text>
             </View>
 
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={[styles.divider, { backgroundColor: colors.borderLight }]} />
 
             <TouchableOpacity
-              style={[styles.storageActionBtn, { backgroundColor: colors.surfaceVariant, borderColor: colors.border }]}
+              style={[
+                styles.storageActionBtn,
+                { backgroundColor: colors.surfaceVariant, borderColor: colors.borderLight },
+              ]}
               onPress={handleClearCache}
-              activeOpacity={0.7}
+              activeOpacity={0.75}
             >
-              <Ionicons name="sparkles-outline" size={18} color={colors.primary} />
-              <Text style={[styles.storageActionText, { color: colors.text, fontSize: fonts.sm }]}>
+              <Ionicons name="sparkles-outline" size={15} color={colors.accent} />
+              <Text style={[styles.storageActionText, { color: colors.text, fontSize: fonts.xs }]}>
                 {t.settings.clearCacheBtn}
               </Text>
             </TouchableOpacity>
           </View>
         </View>
 
-        {/* General */}
+        {/* General Menu */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <Text
+            style={[
+              styles.sectionTitle,
+              { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {t.settings.general}
           </Text>
-          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-            <TouchableOpacity style={styles.menuRow} onPress={() => router.push('/about')}>
-              <Ionicons name="heart-circle-outline" size={22} color="#1B5E20" />
-              <Text style={[styles.menuText, { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
+            <TouchableOpacity style={styles.menuRow} onPress={() => router.push('/about')} activeOpacity={0.75}>
+              <Ionicons name="heart-outline" size={18} color={colors.accent} />
+              <Text
+                style={[
+                  styles.menuText,
+                  { color: colors.text, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.settings.aboutMenu}
               </Text>
-              <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={18} color={colors.textTertiary} />
+              <Ionicons
+                name={isRTL ? 'chevron-back' : 'chevron-forward'}
+                size={16}
+                color={colors.textTertiary}
+              />
             </TouchableOpacity>
 
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={[styles.divider, { backgroundColor: colors.borderLight }]} />
 
-            <TouchableOpacity style={styles.menuRow} onPress={() => router.push('/admin')}>
-              <Ionicons name="shield-checkmark-outline" size={22} color={colors.primary} />
-              <Text style={[styles.menuText, { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+            <TouchableOpacity style={styles.menuRow} onPress={() => router.push('/admin')} activeOpacity={0.75}>
+              <Ionicons name="shield-checkmark-outline" size={18} color={colors.primary} />
+              <Text
+                style={[
+                  styles.menuText,
+                  { color: colors.text, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.settings.adminMenu}
               </Text>
-              <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={18} color={colors.textTertiary} />
+              <Ionicons
+                name={isRTL ? 'chevron-back' : 'chevron-forward'}
+                size={16}
+                color={colors.textTertiary}
+              />
             </TouchableOpacity>
 
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={[styles.divider, { backgroundColor: colors.borderLight }]} />
 
-            <TouchableOpacity style={styles.menuRow} onPress={handleReplayOnboarding}>
-              <Ionicons name="refresh-outline" size={22} color={colors.text} />
-              <Text style={[styles.menuText, { color: colors.text, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+            <TouchableOpacity style={styles.menuRow} onPress={handleReplayOnboarding} activeOpacity={0.75}>
+              <Ionicons name="refresh-outline" size={18} color={colors.icon} />
+              <Text
+                style={[
+                  styles.menuText,
+                  { color: colors.text, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.settings.walkthroughMenu}
               </Text>
-              <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={18} color={colors.textTertiary} />
+              <Ionicons
+                name={isRTL ? 'chevron-back' : 'chevron-forward'}
+                size={16}
+                color={colors.textTertiary}
+              />
             </TouchableOpacity>
 
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={[styles.divider, { backgroundColor: colors.borderLight }]} />
 
-            <TouchableOpacity style={styles.menuRow} onPress={handleClearData}>
-              <Ionicons name="trash-outline" size={22} color={colors.error} />
-              <Text style={[styles.menuText, { color: colors.error, fontSize: fonts.md, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+            <TouchableOpacity style={styles.menuRow} onPress={handleClearData} activeOpacity={0.75}>
+              <Ionicons name="trash-outline" size={18} color={colors.error} />
+              <Text
+                style={[
+                  styles.menuText,
+                  { color: colors.error, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' },
+                ]}
+              >
                 {t.settings.clearAllData}
               </Text>
-              <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={18} color={colors.textTertiary} />
+              <Ionicons
+                name={isRTL ? 'chevron-back' : 'chevron-forward'}
+                size={16}
+                color={colors.textTertiary}
+              />
             </TouchableOpacity>
           </View>
         </View>
 
         {/* About Info */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <Text
+            style={[
+              styles.sectionTitle,
+              { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {t.settings.aboutSection}
           </Text>
-          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+          <View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.borderLight }]}>
             <View style={styles.aboutRow}>
-              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.sm }]}>{t.settings.version}</Text>
-              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.sm }]}>1.0.0</Text>
+              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.xs }]}>
+                {t.settings.version}
+              </Text>
+              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.xs }]}>1.0.0</Text>
             </View>
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={[styles.divider, { backgroundColor: colors.borderLight }]} />
             <View style={styles.aboutRow}>
-              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.sm }]}>{t.settings.content}</Text>
-              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.sm }]}>{t.settings.contentFree}</Text>
+              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.xs }]}>
+                {t.settings.content}
+              </Text>
+              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.xs }]}>
+                {t.settings.contentFree}
+              </Text>
             </View>
-            <View style={[styles.divider, { backgroundColor: colors.border }]} />
+            <View style={[styles.divider, { backgroundColor: colors.borderLight }]} />
             <View style={styles.aboutRow}>
-              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.sm }]}>{t.settings.privacy}</Text>
-              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.sm }]}>{t.settings.privacyText}</Text>
+              <Text style={[styles.aboutLabel, { color: colors.textSecondary, fontSize: fonts.xs }]}>
+                {t.settings.privacy}
+              </Text>
+              <Text style={[styles.aboutValue, { color: colors.text, fontSize: fonts.xs }]}>
+                {t.settings.privacyText}
+              </Text>
             </View>
           </View>
         </View>
@@ -353,7 +478,9 @@ export default function SettingsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: {
+    flex: 1,
+  },
   scrollContent: {
     maxWidth: 840,
     width: '100%',
@@ -363,74 +490,95 @@ const styles = StyleSheet.create({
   header: {
     paddingHorizontal: Spacing.lg,
     paddingTop: Spacing.lg,
-    paddingBottom: Spacing.md,
+    paddingBottom: Spacing.sm,
   },
-  title: { fontWeight: '800' },
+  title: {
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
   section: {
     paddingHorizontal: Spacing.lg,
-    marginTop: Spacing.xl,
+    marginTop: Spacing.lg,
   },
   sectionTitle: {
-    fontWeight: '700',
-    letterSpacing: 0.5,
-    marginBottom: Spacing.sm,
+    fontWeight: '600',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    marginBottom: Spacing.xs,
   },
   card: {
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    padding: Spacing.lg,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
+    padding: Spacing.md,
   },
-  label: { fontWeight: '600', marginBottom: Spacing.md },
+  label: {
+    fontWeight: '600',
+    marginBottom: Spacing.sm,
+  },
   languageGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: Spacing.sm,
+    gap: Spacing.xs,
   },
   languageChip: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
     paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
+    paddingVertical: 7,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
   },
   optionRow: {
     flexDirection: 'row',
-    gap: Spacing.sm,
-    marginBottom: Spacing.md,
+    gap: Spacing.xs,
+    marginBottom: Spacing.sm,
     flexWrap: 'wrap',
   },
   chip: {
-    paddingHorizontal: Spacing.lg,
-    paddingVertical: Spacing.sm,
-    borderRadius: BorderRadius.full,
+    paddingHorizontal: Spacing.md,
+    paddingVertical: 6,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
   },
-  chipText: { fontWeight: '600' },
-  previewText: { lineHeight: 22 },
+  chipText: {
+    fontWeight: '600',
+  },
+  previewText: {
+    lineHeight: 20,
+    marginTop: 4,
+  },
   menuRow: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: Spacing.md,
-    paddingVertical: Spacing.sm,
+    paddingVertical: Spacing.xs,
   },
-  menuText: { flex: 1, fontWeight: '500' },
-  divider: { height: 1, marginVertical: Spacing.sm },
+  menuText: {
+    flex: 1,
+    fontWeight: '500',
+  },
+  divider: {
+    height: StyleSheet.hairlineWidth,
+    marginVertical: Spacing.xs,
+  },
   aboutRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: Spacing.xs,
+    paddingVertical: 4,
   },
   aboutLabel: {},
-  aboutValue: { fontWeight: '500' },
+  aboutValue: {
+    fontWeight: '500',
+  },
   storageActionBtn: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingVertical: 10,
-    borderRadius: BorderRadius.md,
-    borderWidth: 1,
-    gap: 8,
+    paddingVertical: 8,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
+    gap: 6,
     marginTop: Spacing.xs,
   },
   storageActionText: {

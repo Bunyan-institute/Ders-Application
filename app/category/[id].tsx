@@ -4,7 +4,7 @@ import { useLocalSearchParams, useRouter, Stack } from 'expo-router';
 import { useTheme, useScaledFont, useTranslation } from '../../src/hooks';
 import { getCoursesByCategory, getCategoryById } from '../../src/data/mockData';
 import { CourseCard, EmptyState } from '../../src/components';
-import { Spacing } from '../../src/theme';
+import { Spacing, BorderRadius } from '../../src/theme';
 import { Course } from '../../src/types';
 
 export default function CategoryScreen() {
@@ -32,20 +32,40 @@ export default function CategoryScreen() {
           headerTitle: categoryTitle,
           headerStyle: { backgroundColor: colors.surface },
           headerTintColor: colors.text,
+          headerBackTitle: t.common.back,
+          headerShadowVisible: false,
         }}
       />
 
       {category && (
-        <View style={[styles.banner, { backgroundColor: category.color + '12' }]}>
-          <Text style={[styles.bannerTitle, { color: category.color, fontSize: fonts.xl, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+        <View
+          style={[
+            styles.banner,
+            {
+              backgroundColor: colors.surfaceVariant,
+              borderColor: colors.borderLight,
+            },
+          ]}
+        >
+          <Text
+            style={[
+              styles.bannerTitle,
+              { color: colors.primary, fontSize: fonts.lg, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {categoryTitle}
           </Text>
           {category.arabicName && (
-            <Text style={[styles.bannerArabic, { color: category.color, fontSize: fonts.lg }]}>
+            <Text style={[styles.bannerArabic, { color: colors.accent, fontSize: fonts.md }]}>
               {category.arabicName}
             </Text>
           )}
-          <Text style={[styles.bannerDesc, { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <Text
+            style={[
+              styles.bannerDesc,
+              { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' },
+            ]}
+          >
             {categoryDesc} · {t.common.lessonsCount(coursesInCategory.length)}
           </Text>
         </View>
@@ -69,18 +89,29 @@ export default function CategoryScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: {
+    flex: 1,
+  },
   banner: {
     maxWidth: 840,
     width: '100%',
     alignSelf: 'center',
-    padding: Spacing.xl,
+    paddingVertical: Spacing.lg,
+    paddingHorizontal: Spacing.xl,
     alignItems: 'center',
+    borderBottomWidth: StyleSheet.hairlineWidth,
     gap: 4,
   },
-  bannerTitle: { fontWeight: '800' },
-  bannerArabic: { fontWeight: '600' },
-  bannerDesc: {},
+  bannerTitle: {
+    fontWeight: '700',
+    letterSpacing: 0.3,
+  },
+  bannerArabic: {
+    fontWeight: '600',
+  },
+  bannerDesc: {
+    marginTop: 2,
+  },
   list: {
     maxWidth: 840,
     width: '100%',

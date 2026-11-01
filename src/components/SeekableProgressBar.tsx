@@ -8,7 +8,7 @@ import {
   LayoutChangeEvent,
 } from 'react-native';
 import { useTheme, useScaledFont } from '../hooks';
-import { Spacing, BorderRadius } from '../theme';
+import { BorderRadius } from '../theme';
 
 interface SeekableProgressBarProps {
   currentTime: number; // in seconds
@@ -125,10 +125,10 @@ export const SeekableProgressBar: React.FC<SeekableProgressBarProps> = ({
             style={[
               styles.knob,
               {
-                backgroundColor: colors.primary,
-                borderColor: '#FFFFFF',
+                backgroundColor: colors.accent,
+                borderColor: colors.surface,
                 left: `${Math.max(0, Math.min(98, progressPercent))}%`,
-                transform: [{ scale: isScrubbing ? 1.3 : 1 }],
+                transform: [{ scale: isScrubbing ? 1.25 : 1 }],
               },
             ]}
           />
@@ -151,38 +151,38 @@ export const SeekableProgressBar: React.FC<SeekableProgressBarProps> = ({
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    paddingVertical: 4,
+    paddingVertical: 2,
     position: 'relative',
   },
   touchArea: {
-    height: 36,
+    height: 32,
     justifyContent: 'center',
     paddingHorizontal: 0,
   },
   track: {
-    height: 6,
-    borderRadius: 3,
+    height: 4,
+    borderRadius: BorderRadius.xs,
     position: 'relative',
     overflow: 'visible',
     width: '100%',
   },
   fill: {
     height: '100%',
-    borderRadius: 3,
+    borderRadius: BorderRadius.xs,
   },
   knob: {
     position: 'absolute',
     top: -5,
-    marginLeft: -8,
-    width: 16,
-    height: 16,
-    borderRadius: 8,
+    marginLeft: -7,
+    width: 14,
+    height: 14,
+    borderRadius: 7,
     borderWidth: 2,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
+    shadowOpacity: 0.2,
     shadowRadius: 2,
-    elevation: 3,
+    elevation: 2,
   },
   tooltip: {
     position: 'absolute',
@@ -190,12 +190,12 @@ const styles = StyleSheet.create({
     transform: [{ translateX: -20 }],
     paddingHorizontal: 8,
     paddingVertical: 3,
-    borderRadius: BorderRadius.sm,
+    borderRadius: BorderRadius.xs,
     zIndex: 10,
   },
   tooltipText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontWeight: '600',
   },
   timestampsRow: {
     flexDirection: 'row',

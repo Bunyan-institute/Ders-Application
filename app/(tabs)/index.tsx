@@ -1,6 +1,10 @@
 import React, { useCallback, useMemo } from 'react';
 import {
-  View, Text, ScrollView, FlatList, TouchableOpacity,
+  View,
+  Text,
+  ScrollView,
+  FlatList,
+  TouchableOpacity,
   StyleSheet,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
@@ -43,55 +47,136 @@ export default function HomeScreen() {
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={styles.scrollContent}>
-        {/* Header */}
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.scrollContent}
+      >
+        {/* Classical Bismillah Header */}
+        <View style={styles.bismillahContainer}>
+          <Text style={[styles.bismillahText, { color: colors.accent }]}>
+            بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ
+          </Text>
+        </View>
+
+        {/* Scholarly Brand Header */}
         <View style={styles.header}>
-          <View>
-            <Text style={[styles.greeting, { color: colors.textSecondary, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+          <View style={{ flex: 1 }}>
+            <Text
+              style={[
+                styles.greeting,
+                {
+                  color: colors.textSecondary,
+                  fontSize: fonts.xs,
+                  writingDirection: isRTL ? 'rtl' : 'ltr',
+                },
+              ]}
+            >
               {t.home.greeting}
             </Text>
-            <Text style={[styles.appTitle, { color: colors.text, fontSize: fonts.xxl, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+            <Text
+              style={[
+                styles.appTitle,
+                {
+                  color: colors.primary,
+                  fontSize: fonts.xl,
+                  writingDirection: isRTL ? 'rtl' : 'ltr',
+                },
+              ]}
+            >
               {t.home.appTitle}
             </Text>
           </View>
           <TouchableOpacity
-            style={[styles.searchButton, { backgroundColor: colors.surfaceVariant }]}
+            style={[
+              styles.searchButton,
+              {
+                backgroundColor: colors.surface,
+                borderColor: colors.borderLight,
+              },
+            ]}
             onPress={() => router.push('/(tabs)/search')}
             accessibilityLabel={t.tabs.search}
+            activeOpacity={0.75}
           >
-            <Ionicons name="search" size={20} color={colors.icon} />
+            <Ionicons name="search-outline" size={18} color={colors.icon} />
           </TouchableOpacity>
         </View>
 
-        {/* Bunyan & Dua Banner */}
+        {/* Elegant Bunyan & Dua Card */}
         <TouchableOpacity
-          style={[styles.duaBanner, { backgroundColor: colors.primaryLight + '15', borderColor: colors.primaryLight + '35' }]}
+          style={[
+            styles.duaBanner,
+            {
+              backgroundColor: colors.surface,
+              borderColor: colors.borderLight,
+            },
+          ]}
           onPress={() => router.push('/about')}
           activeOpacity={0.8}
         >
-          <View style={[styles.duaBannerIcon, { backgroundColor: colors.primary }]}>
-            <Ionicons name="heart" size={18} color="#FFFFFF" />
+          <View
+            style={[
+              styles.duaBannerIcon,
+              {
+                backgroundColor: colors.surfaceVariant,
+                borderColor: colors.borderLight,
+              },
+            ]}
+          >
+            <Ionicons name="heart-outline" size={16} color={colors.accent} />
           </View>
           <View style={styles.duaBannerContent}>
-            <Text style={[styles.duaBannerTitle, { color: colors.text, fontSize: fonts.sm, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
+            <Text
+              style={[
+                styles.duaBannerTitle,
+                {
+                  color: colors.text,
+                  fontSize: fonts.sm,
+                  writingDirection: isRTL ? 'rtl' : 'ltr',
+                },
+              ]}
+            >
               {t.home.bunyanBannerTitle}
             </Text>
             <Text
-              style={[styles.duaBannerSubtitle, { color: colors.textSecondary, fontSize: fonts.xs, writingDirection: isRTL ? 'rtl' : 'ltr' }]}
+              style={[
+                styles.duaBannerSubtitle,
+                {
+                  color: colors.textSecondary,
+                  fontSize: fonts.xs,
+                  writingDirection: isRTL ? 'rtl' : 'ltr',
+                },
+              ]}
               numberOfLines={1}
             >
               {t.home.bunyanBannerSubtitle}
             </Text>
           </View>
-          <Ionicons name={isRTL ? 'chevron-back' : 'chevron-forward'} size={16} color={colors.textTertiary} />
+          <Ionicons
+            name={isRTL ? 'chevron-back' : 'chevron-forward'}
+            size={16}
+            color={colors.textTertiary}
+          />
         </TouchableOpacity>
 
         {/* Continue Learning */}
         {continueLearning.length > 0 && (
           <View style={styles.section}>
-            <Text style={[styles.sectionTitle, { color: colors.text, fontSize: fonts.lg, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
-              {t.home.continueLearning}
-            </Text>
+            <View style={styles.sectionHeaderRow}>
+              <View style={[styles.sectionBullet, { backgroundColor: colors.accent }]} />
+              <Text
+                style={[
+                  styles.sectionTitle,
+                  {
+                    color: colors.text,
+                    fontSize: fonts.md,
+                    writingDirection: isRTL ? 'rtl' : 'ltr',
+                  },
+                ]}
+              >
+                {t.home.continueLearning}
+              </Text>
+            </View>
             <FlatList
               data={continueLearning}
               renderItem={({ item }) => (
@@ -105,11 +190,23 @@ export default function HomeScreen() {
           </View>
         )}
 
-        {/* Categories */}
+        {/* Categories Section */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text, fontSize: fonts.lg, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
-            {t.home.categories}
-          </Text>
+          <View style={styles.sectionHeaderRow}>
+            <View style={[styles.sectionBullet, { backgroundColor: colors.primary }]} />
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: colors.text,
+                  fontSize: fonts.md,
+                  writingDirection: isRTL ? 'rtl' : 'ltr',
+                },
+              ]}
+            >
+              {t.home.categories}
+            </Text>
+          </View>
           <View style={styles.categoriesGrid}>
             {categories.map(cat => (
               <View key={cat.id} style={styles.categoryItem}>
@@ -119,11 +216,23 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        {/* Featured Courses */}
+        {/* Featured Courses Section */}
         <View style={styles.section}>
-          <Text style={[styles.sectionTitle, { color: colors.text, fontSize: fonts.lg, writingDirection: isRTL ? 'rtl' : 'ltr' }]}>
-            {t.home.featuredCourses}
-          </Text>
+          <View style={styles.sectionHeaderRow}>
+            <View style={[styles.sectionBullet, { backgroundColor: colors.accent }]} />
+            <Text
+              style={[
+                styles.sectionTitle,
+                {
+                  color: colors.text,
+                  fontSize: fonts.md,
+                  writingDirection: isRTL ? 'rtl' : 'ltr',
+                },
+              ]}
+            >
+              {t.home.featuredCourses}
+            </Text>
+          </View>
           <View style={styles.coursesList}>
             {featuredCourses.map(course => (
               <CourseCard key={course.id} course={course} onPress={handleCoursePress} />
@@ -131,39 +240,55 @@ export default function HomeScreen() {
           </View>
         </View>
 
-        <View style={{ height: 20 }} />
+        <View style={{ height: 24 }} />
       </ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
+  container: {
+    flex: 1,
+  },
   scrollContent: {
     maxWidth: 840,
     width: '100%',
     alignSelf: 'center',
     paddingBottom: Spacing.xxl,
   },
+  bismillahContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: Spacing.md,
+    paddingBottom: Spacing.xs,
+  },
+  bismillahText: {
+    fontSize: 16,
+    fontWeight: '500',
+    letterSpacing: 0.5,
+  },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: Spacing.lg,
-    paddingTop: Spacing.lg,
+    paddingTop: Spacing.xs,
     paddingBottom: Spacing.md,
   },
   greeting: {
     fontWeight: '500',
     marginBottom: 2,
+    letterSpacing: 0.2,
   },
   appTitle: {
-    fontWeight: '800',
+    fontWeight: '700',
+    letterSpacing: 0.3,
   },
   searchButton: {
-    width: 44,
-    height: 44,
-    borderRadius: 22,
+    width: 38,
+    height: 38,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -172,15 +297,17 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginHorizontal: Spacing.lg,
     marginBottom: Spacing.lg,
-    padding: Spacing.md,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
+    paddingVertical: Spacing.md,
+    paddingHorizontal: Spacing.md,
+    borderRadius: BorderRadius.md,
+    borderWidth: StyleSheet.hairlineWidth,
     gap: Spacing.md,
   },
   duaBannerIcon: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 32,
+    height: 32,
+    borderRadius: BorderRadius.xs,
+    borderWidth: StyleSheet.hairlineWidth,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -188,17 +315,30 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   duaBannerTitle: {
-    fontWeight: '700',
+    fontWeight: '600',
     marginBottom: 2,
   },
-  duaBannerSubtitle: {},
+  duaBannerSubtitle: {
+    fontWeight: '400',
+  },
   section: {
     marginBottom: Spacing.xl,
   },
-  sectionTitle: {
-    fontWeight: '800',
+  sectionHeaderRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
     paddingHorizontal: Spacing.lg,
-    marginBottom: Spacing.md,
+    marginBottom: Spacing.sm,
+    gap: 8,
+  },
+  sectionBullet: {
+    width: 4,
+    height: 14,
+    borderRadius: 2,
+  },
+  sectionTitle: {
+    fontWeight: '600',
+    letterSpacing: 0.2,
   },
   categoriesGrid: {
     flexDirection: 'row',
@@ -206,8 +346,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: Spacing.md,
   },
   categoryItem: {
-    width: '25%',
-    minWidth: 80,
+    width: '33.33%',
   },
   coursesList: {
     paddingHorizontal: Spacing.lg,

@@ -57,8 +57,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: 'حديث شريف في صحيحي البخاري ومسلم.',
           description:
             'مبادرة بنيان مشروع وقفي تقني غير ربحي، صُمم بأيدي أبناء الأمة لجمع التراث العلمي الأصيل وتيسيره للجميع بأحدث التقنيات مجاناً 100% ودون أي إعلانات لوجه الله تعالى كصدقة جارية.',
-          highlightColor: '#BF360C',
-          accentColor: '#FF8F00',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'الانتقال إلى محتوى التطبيق',
           nextStepTitle: 'التالي: ما هو التطبيق',
           highlights: [
@@ -94,8 +94,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: 'حديث شريف رواه الإمام مسلم في صحيحه.',
           description:
             'أكاديمية رقمية متكاملة تضم 7 متون علمية أصيلة في العقيدة والحديث والفقه، مع مشغل صوتي دقيق، عارض كتب PDF مدمج، وتحميل كامل للاستماع دون اتصال بأربع لغات.',
-          highlightColor: '#0D47A1',
-          accentColor: '#00ACC1',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'الانتقال إلى فضيلة الشيخ',
           nextStepTitle: 'التالي: شيوخنا الأفاضل',
           highlights: [
@@ -136,8 +136,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: 'نسأل الله أن يجزي شيوخنا خير الجزاء، وأن يغفر لهم، وينفع الأمة بعلمهم المبارك.',
           description:
             'العلم الشرعي أمانة متوارثة نُقلت عبر أجيال من العلماء الربانيين والمعلمين المخلصين. كل درس وسلسلة علمية هنا هي ثمرة جهودهم المباركة في خدمة كتاب الله وسنة رسوله ﷺ، وواجبنا حفظ فضلهم بالدعاء المستمر لهم.',
-          highlightColor: '#1B5E20',
-          accentColor: '#D4AF37',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'ابدأ طلب العلم',
           nextStepTitle: 'ابدأ طلب العلم',
           highlights: [
@@ -180,8 +180,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: '«አማኝ ለአማኝ ልክ እንደ ህንጻ ነው፤ አንዱ ሌላውን ያጠናክራል።» (ቡኻሪ እና ሙስሊም)',
           description:
             'ቡንያን ትክክለኛ የእስልምና እውቀትን ከዘመናዊ ቴክኖሎጂ ጋር በማጣመር የተቋቋመ ነጻ የዲጂታል ተነሳሽነት ነው። እንደ ቋሚ ወቅፍና ሰደቀቱል ጃሪያህ የተዘጋጀ ሆኖ ምንም አይነት ማስታወቂያ ወይም ክፍያ የለውም።',
-          highlightColor: '#BF360C',
-          accentColor: '#FF8F00',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'ወደ መተግበሪያው ቀጥል',
           nextStepTitle: 'ቀጣይ: ስለ መተግበሪያው',
           highlights: [
@@ -217,8 +217,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: '«እውቀትን ፍለጋ መንገድ የጀመረን ሰው አላህ ወደ ጀነት የሚወስደውን መንገድ ያቀልለታል።» (ሶሒሕ ሙስሊም)',
           description:
             'በዐቂዳ፣ በሐዲስና በፊቅህ የተዋቀሩ 7 ዋና ዋና ትክክለኛ ኪታቦች፣ ጥራት ያለው የድምጽ ማጫወቻ፣ የተሟላ ፒዲኤፍ (PDF) ንባብ እና ያለ ኢንተርኔት የማውረድ አሰራር የተካተቱበት መተግበሪያ ነው።',
-          highlightColor: '#0D47A1',
-          accentColor: '#00ACC1',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'ወደ ሼኾቻችን ቀጥል',
           nextStepTitle: 'ቀጣይ: ስለ ሼኾቻችን',
           highlights: [
@@ -259,8 +259,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: 'አላህ ለመምህሮቻችን ታላቅ ምንዳን ይስጣቸው፣ ይማራቸው፣ በእውቀታቸውም ኡማውን ይጠቅምበት።',
           description:
             'በእስልምና እውነተኛ እውቀት በታማኝ ዑለማዎችና መምህራን በኩል የሚተላለፍ አደራ ነው። እዚህ የቀረቡት ትምህርቶች ሼኾቻችን ለቁርኣንና ሐዲስ የሰጡትን ታላቅ አገልግሎት ያከብራሉ።',
-          highlightColor: '#1B5E20',
-          accentColor: '#D4AF37',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'እውቀት መፈለግ ጀምር',
           nextStepTitle: 'እውቀት መፈለግ ጀምር',
           highlights: [
@@ -303,8 +303,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: '«Mu\'minni mu\'minaaf akka ijaarsa gamooti; gariin isaanii garii jabeessa.» (Bukhaarii fi Muslim)',
           description:
             'Bunyaan beekumsa Islaamaa qulqulluu teeknoolojii ammayyaa wajjin walitti fiduuf kan hundeeffame inisheetivii dhuunfaa bilisaati. Akka waqfii fi sadaqaa itti-fufaatti qophaa\'ee beeksisa fi kaffaltii tokkollee hin qabu.',
-          highlightColor: '#BF360C',
-          accentColor: '#FF8F00',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'Gara Appiitti Itti Fufaa',
           nextStepTitle: "Itti Aanu: Waa'ee Appii",
           highlights: [
@@ -340,8 +340,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: '«Nama beekumsa barbaachaaf karaa deeme, Allaahn gara jannataatti karaa isaaf laaffisa.» (Sahiih Muslim)',
           description:
             'Akaadaamii dijitaalaa kitaabbilee qulqulluu 7 Aqiidaa, Hadiisa fi Fiqhii of keessaa qabu. Sagalee qulqulluu, PDF kitaabaa dubbisuu fi intarneetii malee buufatanii barachuu dabalata.',
-          highlightColor: '#0D47A1',
-          accentColor: '#00ACC1',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'Gara Sheekotaatti Itti Fufaa',
           nextStepTitle: "Itti Aanu: Waa'ee Sheekotaa",
           highlights: [
@@ -383,8 +383,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
             'Allaahn barsiisota keenyaaf galata guddaa haa kennuuf, isaaniif haa araaramu, beekumsa isaaniitiinis Ummaticha haa fayyadu.',
           description:
             'Beekumsa Islaamaa keessatti beekumsa qulqulluu jechuun amana ulamaa\'ota fi barsiisota amanamaadhaan dhalootaaf darbedha. Barnoonni asitti dhihaate hundi tajaajila sheekonni keenya Qur\'aana fi Hadiisaaf kennan kan kabajudha.',
-          highlightColor: '#1B5E20',
-          accentColor: '#D4AF37',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'Beekumsa Barbaaduu Jalqabi',
           nextStepTitle: 'Beekumsa Barbaaduu Jalqabi',
           highlights: [
@@ -428,8 +428,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: '«The believer to another believer is like a solid structure, each part strengthening the other.» (Sahih al-Bukhari & Muslim)',
           description:
             'Bunyan (بُنْيَان) is an independent non-profit digital initiative built to unite authentic Islamic scholarship with modern technology. Established purely as an open perpetual Waqf and continuous charity (Sadaqah Jariyah), Bunyan provides a clean, distraction-free sanctuary for Muslims around the world with zero ads or subscriptions.',
-          highlightColor: '#BF360C',
-          accentColor: '#FF8F00',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'Continue to The App',
           nextStepTitle: 'Next: What the App Is',
           highlights: [
@@ -465,8 +465,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
           quoteTranslation: 'Whoever treads a path seeking knowledge, Allah makes easy for him a path to Paradise. (Sahih Muslim)',
           description:
             'An authentic digital curriculum hosting 7 foundational classical Kitabs across Aqeedah, Hadith, and Fiqh. Features seamless synchronized PDF reading, seekable audio playback, offline range downloads, and complete 4-language support.',
-          highlightColor: '#0D47A1',
-          accentColor: '#00ACC1',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'Continue to The Sheikh',
           nextStepTitle: 'Next: The Sheikhs',
           highlights: [
@@ -508,8 +508,8 @@ export function getWelcomeSlides(lang: SupportedLanguage = 'ar'): WelcomeSlide[]
             'May Allah reward our teachers with the highest good, forgive them, and cause their sacred knowledge to benefit the Ummah.',
           description:
             'Sacred knowledge in Islam is an inherited trust, faithfully transmitted through dedicated scholars and sincere teachers. Every series, audio recording, and lesson hosted here honors the lifelong devotion of the Sheikhs who taught the Quran and Sunnah. We invite every seeker to pray for their continuous reward and elevated status.',
-          highlightColor: '#1B5E20',
-          accentColor: '#D4AF37',
+          highlightColor: '#1A4D2E',
+          accentColor: '#B8963E',
           buttonLabel: 'Start Seeking Knowledge',
           nextStepTitle: 'Start Seeking Knowledge',
           highlights: [

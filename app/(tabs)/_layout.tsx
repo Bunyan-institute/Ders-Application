@@ -41,7 +41,7 @@ export default function TabLayout() {
         options={{
           title: t.tabs.home,
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'home' : 'home-outline'} size={21} color={color} />
+            <Ionicons name={focused ? 'home' : 'home-outline'} size={21} color={color as string} />
           ),
         }}
       />
@@ -50,7 +50,7 @@ export default function TabLayout() {
         options={{
           title: t.tabs.search,
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'search' : 'search-outline'} size={21} color={color} />
+            <Ionicons name={focused ? 'search' : 'search-outline'} size={21} color={color as string} />
           ),
         }}
       />
@@ -62,7 +62,7 @@ export default function TabLayout() {
             <Ionicons
               name={focused ? 'cloud-download' : 'cloud-download-outline'}
               size={21}
-              color={color}
+              color={color as string}
             />
           ),
         }}
@@ -72,7 +72,7 @@ export default function TabLayout() {
         options={{
           title: t.tabs.bookmarks,
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'bookmark' : 'bookmark-outline'} size={21} color={color} />
+            <Ionicons name={focused ? 'bookmark' : 'bookmark-outline'} size={21} color={color as string} />
           ),
         }}
       />
@@ -81,7 +81,7 @@ export default function TabLayout() {
         options={{
           title: t.tabs.settings,
           tabBarIcon: ({ color, focused }) => (
-            <Ionicons name={focused ? 'settings' : 'settings-outline'} size={21} color={color} />
+            <Ionicons name={focused ? 'settings' : 'settings-outline'} size={21} color={color as string} />
           ),
         }}
       />

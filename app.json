@@ -7,12 +7,6 @@
     "icon": "./assets/icon.png",
     "scheme": "sheikh-learning",
     "userInterfaceStyle": "automatic",
-    "newArchEnabled": true,
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#1B5E20"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.sheikh.learning"
@@ -32,7 +26,15 @@
     "plugins": [
       "expo-router",
       "expo-font",
-      "expo-splash-screen",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 200,
+          "resizeMode": "contain",
+          "backgroundColor": "#1B5E20"
+        }
+      ],
       "expo-status-bar"
     ],
     "experiments": {

@@ -122,7 +122,7 @@ describe("Sheikh's Islamic Learning App Core Tests", () => {
 
     const csv = admin.exportReportCsv();
     expect(csv).toContain('Course Title');
-    expect(csv).toContain('كِتَابُ التَّوْحِيدِ');
+    expect(csv).toContain('شَرْحُ رِيَاضِ الصَّالِحِينَ');
     expect(csv).toContain('Total Registered Learners');
   });
 
@@ -135,7 +135,7 @@ describe("Sheikh's Islamic Learning App Core Tests", () => {
     });
 
     // Check all 7 authentic Kitab titles
-    expect(courses[0].title).toBe('كِتَابُ التَّوْحِيدِ');
+    expect(courses[0].title).toBe('شَرْحُ رِيَاضِ الصَّالِحِينَ (ሪያዱ ሷሊሂን)');
     expect(courses[1].title).toBe('ثَلَاثَةُ الأُصُولِ وَأَدِلَّتُهَا');
     expect(courses[2].title).toBe('القَوَاعِدُ الأَرْبَعُ');
     expect(courses[3].title).toBe('الأَرْبَعُونَ النَّوَوِيَّةُ');

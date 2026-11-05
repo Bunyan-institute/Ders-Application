@@ -29,8 +29,8 @@ Ensure you have [Bun](https://bun.sh) (or Node.js / npm) installed.
 
 ```bash
 # Clone the repository
-git clone https://github.com/FuadTesfaye/sheikhs-learning.git
-cd sheikhs-learning
+git clone https://github.com/Bunyan-institute/Ders-Application.git
+cd Ders-Application
 
 # Install dependencies
 bun install

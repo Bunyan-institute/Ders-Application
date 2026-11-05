@@ -5,6 +5,10 @@ import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { useLearningStore, useDownloadStore, useSettingsStore } from '../src/store';
 import { Colors } from '../src/theme';
 
+export const unstable_settings = {
+  initialRouteName: 'index',
+};
+
 export default function RootLayout() {
   const [ready, setReady] = useState(false);
   const loadLearning = useLearningStore(s => s.loadData);
@@ -36,7 +40,6 @@ export default function RootLayout() {
           animation: 'none',
           contentStyle: { backgroundColor: currentColors.background },
         }}
-        initialRouteName="index"
       >
         <Stack.Screen name="index" />
         <Stack.Screen name="(tabs)" />
